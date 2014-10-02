@@ -2,8 +2,8 @@
 class SessionsController < ApplicationController
   def new
   end
+  
   def create
-
     @agent = Mechanize.new
     page = @agent.get 'https://signin.lds.org/SSOSignIn/'
     page.forms.each do |f|
@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
     @res = @agent.get(web_address).body
     render 'new'
   end
+
   def destroy
   end
 end
