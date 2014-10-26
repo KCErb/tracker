@@ -1,0 +1,20 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <table>
+    <tr>
+      <td>
+        <h3 class="panel-title">
+          <%= comment.commenter_name %>
+          <span class="time-ago"> commented <%= time_ago_in_words(comment.created_at) %> ago</span>
+        </h3>
+      </td>
+      <td align="right">
+        <span class="label label-empty"><%= comment.commenter_calling %></span>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="panel-body">
+  <%= comment.body %>
+</div>
+</div>

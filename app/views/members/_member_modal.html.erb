@@ -1,0 +1,35 @@
+<div class="modal" id="view-member" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- Close Button -->
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <!-- Body -->
+      <div class="modal-body" id="myModalBody">
+        <div class='row'>
+          <!-- Comments column -->
+          <div class='col-md-8' style="border-right: 1px solid #ccc;">
+            <%= render partial: 'members/timeline', locals: {member: member} %>
+          </div>
+          <!-- Member info and Tags column -->
+          <div class='col-md-4'>
+            <hr class = "hidden-lg hidden-md">
+            <h4 class="modal-section-title"><i class='fa fa-book'></i> Member Info</h4>
+            <br>
+            <div id="member-info"></div>
+            <hr class = "hidden-lg hidden-md">
+            <h4 class="modal-section-title"><i class='fa fa-tag'></i> Tags</h4>
+            <%= render partial: 'members/member_tags', locals: {member: member} %>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

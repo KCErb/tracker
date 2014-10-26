@@ -1,0 +1,25 @@
+<!-- Partial needs member -->
+<div id="timeline">
+
+  <% if member.comments.length == 0 %>
+    <h4 style="text-align: center">
+      There are no comments for this member <br> you can add the first one below
+    </h4>
+    <hr>
+  <% end %>
+
+  <% member.timeline_data.each do |arr| %>
+    <% if arr[1].is_a? Comment %>
+      <%= render partial: arr[1] %>
+    <% else %>
+      <%= render partial: 'tag_histories/tag_history',
+                 locals: {changed_time: arr[0],
+                          person: arr[1][0],
+                          changed: arr[2],
+                          tag: arr[3] } %>
+    <% end %>
+    <div class="timeline-spacer"></div>
+  <% end #each %>
+
+  <%= render partial: 'comments/new_comment', locals: {member: member} %>
+</div>

@@ -1,0 +1,19 @@
+<ul id="organization-filter-dropdown" class="dropdown-menu" role="menu">
+<% ["Elders Quorum", "High Priests Group", "Relief Society", "Single Adult",
+"Young Single Adult", "Young Men", "Young Women", "Primary"].each do |organization| %>
+  <li>
+    <a data-method="patch"
+       data-remote="true"
+       rel="nofollow"
+       href="/update_filters?type=organization&amp;organization=<%=organization%>">
+
+      <% if current_user.filters[:organization] == organization %>
+        <i class='fa fa-check-square-o fa-2x'></i>
+      <% else %>
+        <i class='fa fa-square-o fa-2x'></i>
+      <% end %>
+      <span class='organization-filter'><%= organization %></span>
+    </a>
+  </li>
+<% end %>
+</ul>

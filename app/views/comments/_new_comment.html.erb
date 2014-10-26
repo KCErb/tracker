@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <table>
+      <tr>
+        <td>
+          <h3 class="panel-title">
+            <%= current_user.name %>
+          </h3>
+        </td>
+        <td align="right">
+          <span class="label label-empty"><%= current_user.calling %></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="panel-body">
+    <%= form_for [member, member.comments.build],
+    remote: true,
+    html: {id: 'new-comment-form', },
+    authenticity_token: true  do |f| %>
+    <%= hidden_field_tag "comment[commenter_name]", current_user.name %>
+    <%= hidden_field_tag "comment[commenter_calling]", current_user.calling %>
+    <%= f.text_area :body, class: "new-comment-box", placeholder: "Leave a comment" %>
+    <%= f.submit "Comment", class: "btn btn-success pull-right" %>
+    <% end %>
+  </div>
+</div>

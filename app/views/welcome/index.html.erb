@@ -1,13 +1,31 @@
-<h1>Log in</h1>
-
-<%= form_tag sessions_path do %>
-  <p>
-    <%= label_tag :username %><br />
-    <%= text_field_tag :username, params[:username] %>
-  </p>
-  <p>
-    <%= label_tag :password %><br />
-    <%= password_field_tag :password %>
-  </p>
-  <p class="button"><%= submit_tag "Log in" %></p>
+<% if flash[:notice] != '' && flash[:notice] %>
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only">Close</span>
+  </button>
+  <%= flash[:notice] = '' %>
+</div>
 <% end %>
+
+<% flash[:notice] = '' %>
+
+<div class="log-in">
+<h1>Sign in</h1>
+<div class="log-in-box">
+<%= form_tag sessions_path do %>
+    <%= label_tag :username, "LDS Account Username", class: "log-in-title"%><br />
+    <%= text_field_tag :username, params[:username],
+                                  class: "form-control log-in-input",
+                                  autocomplete: "off"   %>
+    <%= label_tag :password, "Password", class: "log-in-title" %><br />
+    <%= password_field_tag :password, params[:password],
+                                      class: "form-control log-in-input",
+                                      autocomplete: "off"
+                                        %>
+    <%= submit_tag "Sign in", class: "padded-btn btn btn-success pull-right" %>
+<% end %>
+</div>
+
+
+</div>

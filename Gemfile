@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 # Use postgresql as the database for Active Record
@@ -16,6 +15,9 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+# Make turbo-links not kill the nodes
+gem 'jquery-turbolinks'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -38,9 +40,18 @@ ruby '2.1.2'
 # Use unicorn as the app server
 gem 'unicorn'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+#Scraping
 gem 'mechanize'
+gem 'json'
+gem 'nokogiri'
+
+# Security checking with brakeman
+group :development do
+  gem 'brakeman', :require => false
+end
+
+# Fontawesome!
+gem 'font-awesome-rails'

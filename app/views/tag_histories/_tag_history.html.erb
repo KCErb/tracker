@@ -1,0 +1,15 @@
+<div class="tag-history">
+  <div class='row'>
+    <div class='col-xs-2 col-sm-1'>
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x light"></i>
+        <i class="fa fa-tag fa-stack-1x dark"></i>
+      </span>
+    </div>
+    <div class='col-xs-10 col-sm-11 vcenter'>
+      <strong><%= person %></strong> <%= changed %> the
+      <span class='label label-<%= tag.color %>' ><%= tag.body %></span>
+      tag <%= time_ago_in_words(changed_time) %> ago
+    </div>
+  </div>
+</div>

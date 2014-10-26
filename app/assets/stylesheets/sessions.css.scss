@@ -1,3 +1,319 @@
 // Place all the styles related to the sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.label {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 11.844px;
+  font-weight: bold;
+  line-height: 14px;
+  color: #fff;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+}
+
+textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+  resize:vertical;
+}
+
+textarea:focus{
+    background-color: #fff;
+}
+textarea:not(:focus){
+    background-color: #fafafa;
+}
+
+::-webkit-input-placeholder { color: #a9a9a9 }
+:-moz-placeholder { color: #a9a9a9 }
+::-moz-placeholder { color: #a9a9a9 }
+:-ms-input-placeholder { color: #a9a9a9 }
+
+body {
+  margin: 0;
+  font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  color: #4c4c4e;
+  background-color: #fff;
+}
+
+.navbar-default {
+  background-color: transparent;
+  border-color: transparent;
+  margin-bottom: 0px;
+}
+
+.navbar-default .navbar-nav > .active > a {
+  color: #000;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #000;
+    font-weight: 600;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #000;
+    font-weight: 600;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.navbar-default .navbar-nav > li > a {
+    font-weight: 600;
+    color: #999;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.navbar-default .navbar-nav > .dropdown > a{
+    color: #333;
+
+}
+
+.navbar .container-fluid, .navbar-collapse {
+    padding-left:0;
+}
+
+.navbar-collapse.in {
+    padding-left:30px;
+}
+
+.navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background-color: transparent;
+  color: #000;
+}
+
+.page-tab {
+  line-height: 28px;
+
+  font-weight: 600;
+  color: #aaa;
+}
+
+.page-tab.active {
+  font-weight: 700;
+  color: #000;
+}
+
+.label-blue {
+  background-color: #00788C;
+}
+.label-blue[href]:hover,
+.label-blue[href]:focus {
+  background-color: #00788C;
+}
+
+
+.label-green {
+  background-color: #6E9B23;
+}
+.label-green[href]:hover,
+.label-green[href]:focus {
+  background-color: #6E9B23;
+}
+
+.label-gold {
+  background-color: #C8A03C;
+}
+.label-gold[href]:hover,
+.label-gold[href]:focus {
+  background-color: #C8A03C;
+}
+
+.label-red {
+  background-color: #BE503C;
+}
+.label-red[href]:hover,
+.label-red[href]:focus {
+  background-color: #BE503C;
+}
+
+.label-empty {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 6px;
+  margin-top: -6px;
+  font-weight: 500;
+}
+
+.label-tag-editor {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: .2em .6em .3em;
+}
+
+.label-tag-filter {
+  position: relative;
+  top: -6px;
+  left: 2px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: .2em .6em .3em;
+}
+.organization-filter {
+  position: relative;
+  top: -6px;
+  left: 2px;  
+}
+
+table.tag-editor {
+  border-collapse:separate;
+  border-spacing:0 5px;
+}
+
+.comment-number {
+  font-weight: 900;
+  font-size: small;
+}
+
+.page-title {
+  font-size:40px;
+  border-bottom:8px solid #5c7a99;
+  color:#5c7a99;
+  padding-bottom:7px;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: transparent;
+ }
+
+ tr.odd {
+   background-color: rgba(161,195,207,0.2);
+ }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Georgia", serif;
+  font-weight: 300;
+  color: #6d6d6b;
+}
+a {
+  color: #5c7a99;
+}
+
+html body {
+  /*background: 0;
+  background: #fff;*/
+  font-weight: 300;
+}
+
+table.table th {
+  font-weight: 300;
+}
+
+table.table thead {
+  color: #969699;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.new-comment-box {
+  width: 100%;
+  height: 200px;
+}
+
+.panel-default {
+  border-color: #989898;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.panel-default > .panel-heading {
+  color:#fff;
+  background-color:#5c7a99;
+  border-color: #ccc;
+}
+
+.panel-title {
+  font-family: "Helvetica", sans-serif;
+  font-weight: 600;
+}
+
+.time-ago {
+  font-weight: 100;
+  color: #eee;
+  font-size: 13px;
+}
+
+table {
+  width: 100%;
+}
+
+.member-info-subheader {
+  font-weight: 800;
+  color: #6d6d6b;
+  font-size: 13px;
+  padding-right: 0px;
+  text-align: right;
+}
+
+.info-padded {
+  padding-bottom: 5px;
+}
+
+.spaced-col {
+  margin: 0px 0px 0px 0px;
+  height: 45px;
+}
+
+.light {
+  color: #ccc;
+}
+
+.dark {
+  color: #888;
+}
+
+.timeline-spacer {
+  height: 20px;
+  border-left: 3px solid #ccc;
+  margin-left: 20px;
+}
+
+.tag-history {
+  padding-left: 2px;
+}
+
+.btn-invis {
+  border-color: transparent;
+}
+
+@media (max-width: 991px) {
+  .tag-editor {
+    margin: 20px;
+  }
+  .modal-section-title {
+    text-align: center;
+  }
+}
+
+@media (min-width: 992px) {
+  .other-members {
+    text-align: left;
+  }
+}
+
+.vcenter {
+  padding-top: 8px;;
+}

@@ -1,3 +1,37 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.log-in-box {
+  width: 600px;
+  background: #5c7a99;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 6px;
+  padding: 20px 80px 45px 80px;
+
+}
+
+.log-in {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.log-in h1 {
+  font-family: "Georgia", serif;
+  font-weight: 300;
+  color: #6d6d6b;
+}
+
+
+.log-in-title {
+  color: #fff;
+}
+
+.log-in-input {
+  height: 40px;
+}
+
+.padded-btn {
+  margin: 3px;
+}

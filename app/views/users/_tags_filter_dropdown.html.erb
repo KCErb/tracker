@@ -1,0 +1,22 @@
+<ul id="tags-filter-dropdown" class="dropdown-menu" role="menu">
+<% Tag.where("organization = ? OR organization =?", "All", "Internal").each do |tag| %>
+  <li>
+    <a data-method="patch"
+       data-remote="true"
+       rel="nofollow"
+       href="/update_filters?type=tags&amp;body=<%=tag.body%>">
+
+      <% if current_user.filters[:tags].include? tag.body %>
+        <i class='fa fa-check-square-o fa-2x'></i>
+      <% else %>
+        <i class='fa fa-square-o fa-2x'></i>
+      <% end %>
+
+      <span class='label-tag-filter label label-<%= tag.color %>' >
+        <%= tag.body %>
+      </span>
+
+    </a>
+  </li>
+<% end %>
+</ul>
