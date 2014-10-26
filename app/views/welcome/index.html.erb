@@ -9,6 +9,8 @@
 <% end %>
 
 <%= flash[:notice].to_s %>
+<%= flash[:notice] == '' %>
+<%= flash[:notice] == nil %>
 
 <% flash[:notice] = '' %>
 
