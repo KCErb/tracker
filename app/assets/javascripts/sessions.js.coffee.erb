@@ -4,8 +4,8 @@ updateKnownUnknownCounts = ->
   unknown_count = 0
   $("#dataTable tbody tr").each ->
     tags_string = $(this).find('td#tags').html()
-    tags_string = tags_string.replace("\n<span class=\"label label-green\">New</span> ","")
-
+    tags_string = tags_string.replace("<span class=\"label label-green\">New</span>","")
+    console.log JSON.stringify(tags_string)
     has_tags = tags_string isnt ""
     no_tags = tags_string is ""
     has_comments = $(this).find('td#comments span.comment-number').html() isnt "0"

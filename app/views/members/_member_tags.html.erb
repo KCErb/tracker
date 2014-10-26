@@ -4,7 +4,7 @@
       organization: "All"
       "organization = ? OR organization =?", "All", "Internal"
       -->
-      <% Tag.where("organization = ? OR organization =?", "All", "Internal").each do |tag| %>
+      <% Tag.where(organization: "All").each do |tag| %>
         <% tag_history = TagHistory.where(member_id: member.id, tag_id: tag.id).first %>
         <% if tag_history %>
           <% active = tag_history.active? %>
@@ -18,13 +18,13 @@
             <%= hidden_field_tag "member_id", member.id %>
             <% if active %>
               <%= hidden_field_tag "removed_by", current_user.name %>
-              <%= hidden_field_tag "removed_at", DateTime.now %>
+              <%= hidden_field_tag "removed_at", Time.zone.now %>
               <%= button_tag(type: "submit", class: "btn btn-invis btn-default") do %>
                 <i class='fa fa-check-square-o fa-2x'></i>
               <% end %>
             <% else %>
               <%= hidden_field_tag "added_by", current_user.name %>
-              <%= hidden_field_tag "added_at", DateTime.now %>
+              <%= hidden_field_tag "added_at", Time.zone.now %>
               <%= button_tag(type: "submit", class: "btn btn-invis btn-default", id: "edit_tag_button_#{tag.id}") do %>
                 <i class='fa fa-square-o fa-2x'></i>
               <% end %>

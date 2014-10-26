@@ -21,6 +21,7 @@
     <%= hidden_field_tag "comment[commenter_name]", current_user.name %>
     <%= hidden_field_tag "comment[commenter_calling]", current_user.calling %>
     <%= f.text_area :body, class: "new-comment-box", placeholder: "Leave a comment" %>
+    <%= f.date_select(:created_at) %>
     <%= f.submit "Comment", class: "btn btn-success pull-right" %>
     <% end %>
   </div>

@@ -7,7 +7,11 @@
     </h4>
     <hr>
   <% end %>
-
+  <%= render partial: "members/move_in", locals: {member: member} %>
+  <div class="timeline-spacer"></div>
+  <% puts "Lets LOOK at that timeline data "%>
+  <% puts member.timeline_data.inspect %>
+  <% puts "done looking"%>
   <% member.timeline_data.each do |arr| %>
     <% if arr[1].is_a? Comment %>
       <%= render partial: arr[1] %>

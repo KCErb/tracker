@@ -1,0 +1,258 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign in</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Make IE play nice -->
+    <meta name="viewport" content="width=device-width, user-scalable=yes"/>
+    <link rel="stylesheet" href="css/project.css?v=2_3" type="text/css" media="all"/>
+    <!--[if lt IE 9]><link rel="stylesheet" href="css/project-ie.css?v=2_3" type="text/css" media="all"/><![endif]-->
+
+	<script src="scripts/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/page.js?v=2_3" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="header-container">
+        <div class="header">
+            <div id="logo" lang="en" title="The Church of Jesus Christ of Latter-day Saints"></div>
+            <div class="app-logo" title="LDS Account - Single Sign On">
+                <div class="app-logo-main">LDS Account</div>
+                <div class="app-logo-sub">SINGLE SIGN ON</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="centeredContent" style="z-index: 100;">
+		<div id="signin-header">Sign in</div><div id="language-header">
+	    	<div id="languageMenu">
+				<div id="changeLanguageDrop" class="normal rounded-corner-TL rounded-corner-TR" >
+				    <span style="display: inline-block; text-indent: 10em;  overflow: hidden; width: 16px; height: 16px; top: 2px; position: relative; background:url('images/ico-language-16.png') no-repeat 0 0;">&nbsp;</span>&nbsp;English&nbsp;<span id="downarrow" style=" text-indent: 10em;  overflow: hidden; width: 10px; height: 10px; display: inline-block; position: relative; top: 2px;">&nbsp;</span>
+				</div>
+
+				<div id="languageModal" class="gone rounded-corner-TL rounded-corner-BL rounded-corner-BR" role="alert" aria-atomic="false" aria-live="polite" aria-hidden="false" aira-describedby="???TODO???">
+					<ul>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								中文 (Chinese)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='zh'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Dansk (Danish)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='da'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Nederlands (Dutch)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='nl'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								suomi (Finnish)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='fi'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Français (French)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='fr'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Deutsch (German)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='de'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								magyar (Hungarian)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='hu'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Bahasa Indonesia (Indonesian)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='in'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Italiano (Italian)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='it'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								日本語 (Japanese)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='ja'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								한국어 (Korean)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='ko'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Norsk (Norwegian)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='no'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Polski (Polish)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='pl'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Português (Portuguese)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='pt'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Русский (Russian)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='ru'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								FaaSamoa (Samoan)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='sm'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								简体中文 (Simplified Chinese)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='zh_CN'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Español (Spanish)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='es'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Svenska (Swedish)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='sv'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								ภาษาไทย (Thai)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='th'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Lea Fakatonga (Tonga)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='to'>
+								</form>
+							</li>
+
+							<li class='languageItem' onclick='$(this).children("form").submit();'>
+								Українська (Ukrainian)
+								<form method='post' action='index.html'> <input type='hidden' name='lang' value='uk'>
+								</form>
+							</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="centeredContent" style="z-index: 1700;">
+		<div id="error-header">
+			<div id="errorToolTip">
+				<div id="cancelError" title="Close">
+					<div id="cancelErrorImage" title="Close"></div>
+				</div>
+                <div id="emptyCredsMsg" style="display:none;">
+                    Your user name or password is incorrect. Please ensure that you are entering the correct information.
+                </div>
+		        <div id="scriptValidationErroMsg"><div id="scriptValidationErroMsgPadding"><div id="scriptValidationErroMsgText">
+
+
+
+
+
+		        </div></div></div>
+			</div>
+		</div>
+	</div>
+
+	<div id="contentWrapper">
+	    <form id="loginForm" class="form" action="/login.html" method="post" autocomplete="off">
+			<div id="content1">
+				<div id="login" class="centeredContent">
+
+					<div id="usernameContainer">
+						<div class="label-container"><label for="username">LDS Account User Name</label></div>
+						<input class="inputText" type="text" name="username" id="username" tabindex="1" autocomplete="off" />
+						<a href="https://ldsaccount.lds.org/site/recover-username" class="forgot-link">
+							Forgot your user name?
+						</a>
+					</div>
+					<div id="passwordContainer">
+						<div class="label-container"><label for="password">Password</label></div>
+						<input class="inputText" type="password" name="password" id="password" autocomplete="off" tabindex="2" />
+						<a href="https://ldsaccount.lds.org/site/recover-password" class="forgot-link">
+							Forgot your password?
+						</a>
+					</div>
+				</div>
+				<span id="closeLegalViewer" class="hidden" title="Close"></span>
+				<div id="legalViewer" class="hidden">
+					<div style="padding-right: 10px;">
+						<div id="rights" class="invisible"></div>
+						<div id="privacy" class="invisible"></div>
+					</div>
+				</div>
+			</div>
+			<div id="content2">
+				<div class="centeredContent">
+					<div id="submitButton" class="formActions">
+					    <input class="button" type="submit" id="submit" tabindex="3"
+					           value="Sign in" />
+					</div>
+					<div id="or" class="formActions">
+						-&nbsp;or&nbsp;-
+					</div>
+					<div id="registerInfo" class="formActions">
+					    <div id="registerInfoLink">
+                            <a href="https://ldsaccount.lds.org/register" id="register">
+                                Register for an LDS Account
+                            </a>
+                        </div>
+						<div id="registerInfoMessage">The main sign-in account for LDS.org and many other online LDS Church resources.</div>
+					</div>
+					<div id="legalNotice">
+		    			By clicking the "Sign in" button, I agree to the <a class="modal" href="conditions.html"><?xml version="1.0" encoding="UTF-8"?>Rights and Use Information  (Updated 2/21/2012)</a> and have read the <a class="modal" href="privacy.html"><?xml version="1.0" encoding="UTF-8"?>Privacy Policy (Updated 3/18/2014)</a>.
+			    	</div>
+		    	</div>
+			</div>
+	    </form>
+	</div>
+
+	<div id="footer">
+        &copy; 2014 by Intellectual Reserve, Inc. All rights reserved.<br />
+	</div>
+
+</body>
+</html>

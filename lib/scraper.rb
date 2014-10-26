@@ -63,11 +63,6 @@ class Scraper
     @user
   end
 
-  def in_ward?
-    ward = @member_list.match(/(prop2 = )(.*?);/)
-    ward == '2968:First Ward'
-  end
-
   def create_user
     m = @member_list.match(/(prop42 = )(.*?);/)
     lds_id = m[2]
@@ -134,8 +129,51 @@ class Scraper
       end
     end
 
-    member.save
-    member
+    if TESTING
+      html = File.read(@path + "/profile.html")
+    else
+      html = @agent.get("https://www.lds.org/mls/mbr/records/member-profile/#{lds_id}?lang=eng").body
+    end
+
+    member_json =  html.match(/(memberProfile.individual = )({.*})/)
+    member_info = JSON.parse(member_json[2])
+
+    #address
+    address = member_info["residentialAddress"]["formattedLines"].join("\n")
+    member.address = address
+
+    #Born / moved in
+    if member_info["formattedMoveDate"]
+      move_in_date = Date.parse(member_info["formattedMoveDate"])
+      member.moved_in = move_in_date
+      member.move_type = "moved-in"
+    end
+
+    if member_info["formattedMoveDate"] == nil && member_info["formattedBirthDate"]
+      birth_date = Date.parse(member_info["formattedBirthDate"])
+      member.moved_in = birth_date
+      member.move_type = "born"
+    end
+
+    # if unable to get move-in info, then don't pull this person in!
+    # we don't want fault records in the db!
+    if member.moved_in
+      member.save
+
+      #add new tag if new
+      if Date.today - member.moved_in < 90
+        new_tag = Tag.find_by_body("New")
+        tag_history = TagHistory.new( tag_id: new_tag.id, member_id: member.id)
+        tag_history.added_by << "Tracker"
+        tag_history.added_at << Time.zone.now
+        tag_history.save
+      end
+      #return member
+      member
+    else
+      #return nothing
+      nil
+    end
   end #end of create_member
 
   def create_base_tags
@@ -182,10 +220,19 @@ class Scraper
     tags = Tag.all
     create_base_tags if tags.length == 0
     #EACH ROW
+    skipped_rows = []
     @page.xpath("//table[@id='dataTable']/tbody/tr").each_with_index do |row, index|
       lds_id = row['data-id']
+      if index > 50
+        skipped_rows << lds_id
+        next
+      end
       member = Member.find_by_lds_id(lds_id)
       member = create_member(lds_id) unless member
+      unless member #may get nil back for member so just skip if so
+        skipped_rows << lds_id
+        next
+      end
 
       row['class'] = index.even? ? "even" : "odd"
 
@@ -195,7 +242,7 @@ class Scraper
       #TAGS
       tags_html = "<td id='tags'>"
       member.tags.each do |tag|
-        tags_html += "<span class='label label-#{tag.color}' >#{tag.body}</span> "
+        tags_html += "<span class='label label-#{tag.color}' >#{tag.body}</span>"
       end
 
       tags_html += "</td>"
@@ -203,6 +250,11 @@ class Scraper
 
       #COMMENTS
       row << "<td id='comments'><i class='fa fa-comment fa-lg'></i> <span class='comment-number'>#{member.comments.count}</span></td>"
+    end
+
+    #remove skipped rows
+    skipped_rows.each do |lds_id|
+      @page.xpath("//tr[@data-id='#{lds_id}']").each{|row| row.remove}
     end
 
     #retreive table

@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 20141022012736) do
   create_table "members", force: true do |t|
     t.text     "lds_id"
     t.text     "organizations"
+    t.text     "address"
+    t.date     "moved_in"
+    t.text     "move_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

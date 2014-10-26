@@ -1,4 +1,5 @@
 #Update timeline
+<% if @member %>
 $('#timeline').replaceWith("<%= escape_javascript( render partial: 'members/timeline', locals: {member: @member}) %>")
 
 #Update user row on main page
@@ -13,7 +14,7 @@ known_count = 0
 unknown_count = 0
 $("#dataTable tbody tr").each ->
   tags_string = $(this).find('td#tags').html()
-  tags_string = tags_string.replace("\n<span class=\"label label-green\">New</span> ","")
+  tags_string = tags_string.replace("<span class=\"label label-green\">New</span>","")
 
   has_tags = tags_string isnt ""
   no_tags = tags_string is ""
@@ -30,3 +31,4 @@ $('#unknown-anchor').empty().append( String(unknown_count) + " Unknown")
 ## Update table via controller call, again, the weakness here
 # is me not knowing how to call other javascript functions. This works . . .
 $.get "/update_table"
+<% end %>

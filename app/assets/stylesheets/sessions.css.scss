@@ -5,6 +5,7 @@
 .label {
   display: inline-block;
   padding: 2px 4px;
+  margin-right: 2px;
   font-size: 11.844px;
   font-weight: bold;
   line-height: 14px;
@@ -174,7 +175,7 @@ body {
 .organization-filter {
   position: relative;
   top: -6px;
-  left: 2px;  
+  left: 2px;
 }
 
 table.tag-editor {
@@ -266,6 +267,11 @@ table {
   font-size: 13px;
   padding-right: 0px;
   text-align: right;
+}
+
+.member-info-spinner {
+  text-align: center;
+  margin-top: 30px;
 }
 
 .info-padded {

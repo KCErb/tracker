@@ -17,8 +17,12 @@
           <div class='col-md-4'>
             <hr class = "hidden-lg hidden-md">
             <h4 class="modal-section-title"><i class='fa fa-book'></i> Member Info</h4>
+            <div id="member-info">
+              <div class="member-info-spinner">
+                <i class="fa fa-spinner fa-spin fa-2x"></i>
+              </div>
+            </div>
             <br>
-            <div id="member-info"></div>
             <hr class = "hidden-lg hidden-md">
             <h4 class="modal-section-title"><i class='fa fa-tag'></i> Tags</h4>
             <%= render partial: 'members/member_tags', locals: {member: member} %>

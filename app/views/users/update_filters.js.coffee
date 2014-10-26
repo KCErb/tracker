@@ -2,7 +2,7 @@ filters = <%= @filters %>;
 
 $("#dataTable tbody tr").each ->
     tags_string = $(this).find('td#tags').html()
-    tags_string = tags_string.replace("<span class=\"label label-green\">New</span> ","")
+    tags_string = tags_string.replace("<span class=\"label label-green\">New</span>","")
     tags_string = tags_string.replace("\n","")
     has_tags = tags_string isnt ""
     no_tags = tags_string is ""
