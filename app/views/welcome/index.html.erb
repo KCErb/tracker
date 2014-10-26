@@ -4,12 +4,9 @@
     <span aria-hidden="true">&times;</span>
     <span class="sr-only">Close</span>
   </button>
+  <%= flash[:notice] %>
 </div>
 <% end %>
-
-<%= flash[:notice].to_s %>
-<%= flash[:notice] == '' %>
-<%= flash[:notice] == nil %>
 
 <% flash[:notice] = '' %>
 

@@ -1,6 +1,6 @@
 #encoding utf-8
 class SessionsController < ApplicationController
-  skip_before_action :require_login, only: :index
+  skip_before_action :require_login, only: :create
   def index
     cookies = session[:user_pref]
     @scraper = Scraper.new(cookies)
