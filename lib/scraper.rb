@@ -223,10 +223,10 @@ class Scraper
     skipped_rows = []
     @page.xpath("//table[@id='dataTable']/tbody/tr").each_with_index do |row, index|
       lds_id = row['data-id']
-      if index > 50
-        skipped_rows << lds_id
-        next
-      end
+      #if index > 50
+      #  skipped_rows << lds_id
+      #  next
+      #end
       member = Member.find_by_lds_id(lds_id)
       member = create_member(lds_id) unless member
       unless member #may get nil back for member so just skip if so
