@@ -223,8 +223,6 @@ class Scraper
     skipped_rows = []
     puts "BEGIN LOGGING STUFF"
     puts "--------------------"
-    puts "@page is:"
-    puts @page.inspect
     @page.xpath("//table[@id='dataTable']/tbody/tr").each_with_index do |row, index|
       puts "row is:"
       puts row.inspect
