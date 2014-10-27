@@ -221,7 +221,13 @@ class Scraper
     create_base_tags if tags.length == 0
     #EACH ROW
     skipped_rows = []
+    puts "BEGIN LOGGING STUFF"
+    puts "--------------------"
+    puts "@page is:"
+    puts @page.inspect
     @page.xpath("//table[@id='dataTable']/tbody/tr").each_with_index do |row, index|
+      puts "row is:"
+      puts row.inspect
       lds_id = row['data-id']
       #if index > 50
       #  skipped_rows << lds_id
@@ -251,7 +257,8 @@ class Scraper
       #COMMENTS
       row << "<td id='comments'><i class='fa fa-comment fa-lg'></i> <span class='comment-number'>#{member.comments.count}</span></td>"
     end
-
+    puts "DONE LOGGING"
+    puts "-------------"
     #remove skipped rows
     skipped_rows.each do |lds_id|
       @page.xpath("//tr[@data-id='#{lds_id}']").each{|row| row.remove}
