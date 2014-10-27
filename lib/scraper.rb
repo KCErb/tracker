@@ -138,10 +138,6 @@ class Scraper
     member_json =  html.match(/(memberProfile.individual = )({.*})/)
     member_info = JSON.parse(member_json[2])
 
-    #address
-    address = member_info["residentialAddress"]["formattedLines"].join("\n")
-    member.address = address
-
     #Born / moved in
     if member_info["formattedMoveDate"]
       move_in_date = Date.parse(member_info["formattedMoveDate"])
@@ -221,16 +217,9 @@ class Scraper
     create_base_tags if tags.length == 0
     #EACH ROW
     skipped_rows = []
-    puts "BEGIN LOGGING STUFF"
-    puts "--------------------"
     @page.xpath("//table[@id='dataTable']/tbody/tr").each_with_index do |row, index|
-      puts "row is:"
-      puts row.inspect
       lds_id = row['data-id']
-      #if index > 50
-      #  skipped_rows << lds_id
-      #  next
-      #end
+
       member = Member.find_by_lds_id(lds_id)
       member = create_member(lds_id) unless member
       unless member #may get nil back for member so just skip if so
@@ -244,7 +233,7 @@ class Scraper
       row['data-organization'] = member.organizations.join(";")
 
       #TAGS
-      tags_html = "<td id='tags'>"
+      tags_html = "<td id='tags' class='tags'>"
       member.tags.each do |tag|
         tags_html += "<span class='label label-#{tag.color}' >#{tag.body}</span>"
       end
@@ -253,10 +242,8 @@ class Scraper
       row << tags_html
 
       #COMMENTS
-      row << "<td id='comments'><i class='fa fa-comment fa-lg'></i> <span class='comment-number'>#{member.comments.count}</span></td>"
+      row << "<td id='comments' class='comments'><i class='fa fa-comment fa-lg'></i> <span class='comment-number'>#{member.comments.count}</span></td>"
     end
-    puts "DONE LOGGING"
-    puts "-------------"
     #remove skipped rows
     skipped_rows.each do |lds_id|
       @page.xpath("//tr[@data-id='#{lds_id}']").each{|row| row.remove}
