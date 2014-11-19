@@ -1,0 +1,58 @@
+<div class="modal" id="create-tag-modal" tabindex="-1" role="dialog" aria-labelledby="modal-header" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <!-- Close Button -->
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="modal-header">
+          Create a new tag
+        </h4>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body" id="myModalBody">
+        <%= form_for tag, remote: true do |f| %>
+          <%= f.label :name %><br>
+          <%= f.text_field :body, class:"form-control", value: tag.body, maxlength: 16 %>
+          <p style="font-size:12px; margin-left:4px;">
+            Max 16 Characters
+          </p>
+
+          <%= hidden_field_tag "tag[organization]", current_user.organization %>
+
+          <!--Choose color-->
+          <%= f.label :color %><br>
+          <select class="form-control" id="tag_color" name="tag[color]">
+            <option <%= tag.color == 'blue' ? 'selected' : '' %>  value="blue">
+              Blue
+            </option>
+            <option <%= tag.color == 'green' ? 'selected' : '' %> value="green">
+              Green
+            </option>
+            <option <%= tag.color == 'gold' ? 'selected' : '' %>  value="gold">
+              Gold
+            </option>
+            <option <%= tag.color == 'red' ? 'selected' : '' %>  value="red">
+              Red
+            </option>
+          </select>
+          <%= f.submit class:"btn btn-success pull-right", style:"margin-top:15px;", data: { disable_with: "Updating..." } %>
+        <% end %>
+        <button type="button" class="btn-cancel btn pull-right" style="margin-top:15px;"
+              data-dismiss="modal">Cancel</button>
+
+      </div>
+
+      <div style='margin:15px; margin-top:45px'>
+        <hr>
+        <p style='font-size:12px; margin-top:-10px;'>
+          Tags created here will only be visible to members of your organization.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

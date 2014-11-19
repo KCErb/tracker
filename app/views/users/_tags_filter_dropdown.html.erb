@@ -1,12 +1,13 @@
 <ul id="tags-filter-dropdown" class="dropdown-menu" role="menu">
-<% Tag.where("organization = ? OR organization =?", "All", "Internal").each do |tag| %>
+  <!-- LIST PUBLIC TAGS -->
+<% Tag.where("organization = ? OR organization = ?", "All", "Internal").each do |tag| %>
   <li>
     <a data-method="patch"
        data-remote="true"
        rel="nofollow"
        href="/update_filters?type=tags&amp;body=<%=tag.body%>">
-
-      <% if current_user.filters[:tags].include? tag.body %>
+      <% tags = current_user.filters[:tags].split(";") %>
+      <% if tags.any?{|filter_tag| filter_tag == tag.body} %>
         <i class='fa fa-check-square-o fa-2x'></i>
       <% else %>
         <i class='fa fa-square-o fa-2x'></i>
@@ -19,4 +20,53 @@
     </a>
   </li>
 <% end %>
+<% if Tag.where(organization: current_user.organization).count > 0 %>
+  <li class="divider"></li>
+<% end %>
+<!-- LIST USER TAGS -->
+
+<% Tag.where(organization: current_user.organization).each do |tag| %>
+  <li>
+    <table>
+      <tr id="custom-tag-<%= tag.id %>">
+        <td class='tag-td'>
+          <a data-method="patch" data-remote="true" rel="nofollow"
+            href="/update_filters?type=tags&amp;body=<%=tag.body%>">
+            <% tags = current_user.filters[:tags].split(";") %>
+            <% if tags.any?{|filter_tag| filter_tag == tag.body} %>
+              <i class='fa fa-check-square-o fa-2x'></i>
+            <% else %>
+              <i class='fa fa-square-o fa-2x'></i>
+            <% end %>
+            <span class='label-tag-filter label label-<%= tag.color %>' >
+              <%= tag.body %>
+            </span>
+          </a>
+        </td>
+        <td class='edit-tag-td'>
+          <%= link_to edit_tags_dialog_path(id: tag.id), remote: true  do %>
+            <i class="fa fa-pencil"></i>
+          <% end %>
+        </td>
+        <td class='delete-tag-td'>
+          <%= link_to tag, method: :delete,
+            data: { confirm: 'Permanently delete tag?'},
+            authenticity_token: true  do |f| %>
+            <i class="fa fa-times"></i>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </li>
+<% end %>
+<li class="divider"></li>
+ <!-- CREATE -->
+   <li>
+    <a data-remote="true"
+       rel="nofollow"
+       href="/create_tags_dialog">
+        <i style="margin-left:3px;" class='fa fa-plus fa-lg'></i>
+        <span style="margin-left:8px;">Create Tag</span>
+    </a>
+  </li>
 </ul>

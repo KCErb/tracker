@@ -2,17 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .log-in-box {
-  width: 600px;
+  width: 90%;
   background: #5c7a99;
   margin-left: auto;
   margin-right: auto;
   border-radius: 6px;
-  padding: 20px 80px 65px 80px;
+  padding: 20px 50px 65px 50px;
 
 }
 
 .log-in {
-  width: 600px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -21,6 +21,7 @@
   font-family: "Georgia", serif;
   font-weight: 300;
   color: #6d6d6b;
+  margin-left: 35px;
 }
 
 

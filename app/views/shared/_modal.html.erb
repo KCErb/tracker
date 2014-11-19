@@ -1,31 +1,29 @@
-<div class="modal" id="view-member" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="shared-modal" tabindex="-1" role="dialog" aria-labelledby="modal-header" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <!-- Close Button -->
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel"></h4>
+        <h4 class="modal-title" id="modal-header"></h4>
       </div>
       <!-- Body -->
       <div class="modal-body" id="myModalBody">
         <div class='row'>
           <!-- Comments column -->
           <div class='col-md-8' style="border-right: 1px solid #ccc;">
-            <%= render partial: 'members/timeline', locals: {member: member} %>
+            <%= render partial: 'shared/timeline', locals: {household: household} if defined? household %>
+            <%= render partial: 'shared/timeline', locals: {member: member} if defined? member %>
           </div>
           <!-- Member info and Tags column -->
           <div class='col-md-4'>
             <hr class = "hidden-lg hidden-md">
-            <h4 class="modal-section-title"><i class='fa fa-book'></i> Member Info</h4>
-            <div id="member-info">
-              <div class="member-info-spinner">
-                <i class="fa fa-spinner fa-spin fa-2x"></i>
-              </div>
-            </div>
+            <h4 class="modal-section-title"><i class='fa fa-book'></i> Info</h4>
+            <%= render partial: 'shared/info_box' %>
             <br>
             <hr class = "hidden-lg hidden-md">
             <h4 class="modal-section-title"><i class='fa fa-tag'></i> Tags</h4>
-            <%= render partial: 'members/member_tags', locals: {member: member} %>
+            <%= render partial: 'shared/tags_editor', locals: {household: household} if defined? household %>
+            <%= render partial: 'shared/tags_editor', locals: {member: member} if defined? member %>
           </div>
 
         </div>

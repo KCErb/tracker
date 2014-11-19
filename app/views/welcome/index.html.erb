@@ -10,22 +10,38 @@
 
 <% flash[:notice] = '' %>
 
-<div class="log-in">
-<h1>Sign in</h1>
-<div class="log-in-box">
-<%= form_tag sessions_path do %>
-    <%= label_tag :username, "LDS Account Username", class: "log-in-title"%><br />
-    <%= text_field_tag :username, params[:username],
-                                  class: "form-control log-in-input",
-                                  autocomplete: "off"   %>
-    <%= label_tag :password, "Password", class: "log-in-title" %><br />
-    <%= password_field_tag :password, params[:password],
-                                      class: "form-control log-in-input",
-                                      autocomplete: "off"
-                                        %>
-    <%= submit_tag "Sign in", class: "padded-btn btn btn-success pull-right" %>
-<% end %>
-</div>
+<div class='container'>
+  <div id="header">
+    <h1 class='header'> First Ward Tracker </h1>
+  </div>
 
+  <div class='row' style='margin-top:40px;'>
+    <div class='col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2'>
+      <div class="log-in">
+        <h1>Sign in</h1>
+        <div class="log-in-box">
+          <%= form_tag sessions_path do %>
+          <%= label_tag :username, "LDS Account Username", class: "log-in-title"%><br />
+          <%= text_field_tag :username, params[:username],
+          class: "form-control log-in-input",
+            autocomplete: "off"   %>
+            <%= label_tag :password, "Password", class: "log-in-title" %><br />
+            <%= password_field_tag :password, params[:password],
+            class: "form-control log-in-input",
+              autocomplete: "off"
+              %>
+              <%= submit_tag "Sign in", class: "padded-btn btn btn-success pull-right" %>
+              <% end %>
+            </div>
 
-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class='text-center'>
+      <p>
+        This is not an official site of the Church of Jesus Christ of Latter-day Saints. <br>
+        Please contact <a href='mailto:iamkcerb@gmail.com' style='font-weight:bold'>KC Erb</a> with any questions regarding this site.
+      </p>
+    </footer>

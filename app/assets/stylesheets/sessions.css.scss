@@ -53,7 +53,6 @@ body {
 .navbar-default .navbar-nav > .active > a {
   color: #000;
   background-color: transparent;
-  border: 1px solid #ccc;
   border-radius: 3px;
 }
 
@@ -62,7 +61,6 @@ body {
     color: #000;
     font-weight: 600;
     background-color: transparent;
-    border: 1px solid #ccc;
     border-radius: 3px;
 }
 
@@ -71,14 +69,12 @@ body {
     color: #000;
     font-weight: 600;
     background-color: transparent;
-    border: 1px solid #ccc;
     border-radius: 3px;
 }
 
 .navbar-default .navbar-nav > li > a {
     font-weight: 600;
     color: #999;
-    border: 1px solid transparent;
     border-radius: 3px;
 }
 
@@ -98,20 +94,24 @@ body {
 .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: transparent;
+  background-color: transparent !important;
   color: #000;
 }
 
-.page-tab {
-  line-height: 28px;
-
-  font-weight: 600;
-  color: #aaa;
+.dropdown-menu > li > table > tbody > tr > td > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
 }
 
-.page-tab.active {
-  font-weight: 700;
-  color: #000;
+.dropdown-menu > li > table > tbody > tr > td > a:hover,
+.dropdown-menu > li > table > tbody > tr > td > a:focus {
+  text-decoration:none;
+  color:#262626;
 }
 
 .label-blue {
@@ -147,13 +147,20 @@ body {
   background-color: #BE503C;
 }
 
+.label-black {
+  background-color: #000;
+}
+.label-black[href]:hover,
+.label-black[href]:focus {
+  background-color: #000;
+}
+
 .label-empty {
   background-color: transparent;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 6px;
   margin-top: -6px;
-  font-weight: 500;
 }
 
 .label-tag-editor {
@@ -178,12 +185,7 @@ body {
   left: 2px;
 }
 
-table.tag-editor {
-  border-collapse:separate;
-  border-spacing:0 5px;
-}
-
-.comment-number {
+.table-comments {
   font-weight: 900;
   font-size: small;
 }
@@ -246,6 +248,14 @@ table.table thead {
   border-color: #ccc;
 }
 
+.panel-heading {
+  padding-right: 5px;
+}
+
+.panel-footer {
+  padding: 5px 15px;
+}
+
 .panel-title {
   font-family: "Helvetica", sans-serif;
   font-weight: 600;
@@ -261,17 +271,16 @@ table {
   width: 100%;
 }
 
+#households-table {
+  border-bottom: 1px solid #ccc
+}
+
 .member-info-subheader {
   font-weight: 800;
   color: #6d6d6b;
   font-size: 13px;
   padding-right: 0px;
   text-align: right;
-}
-
-.member-info-spinner {
-  text-align: center;
-  margin-top: 30px;
 }
 
 .info-padded {
@@ -303,6 +312,20 @@ table {
 
 .btn-invis {
   border-color: transparent;
+  background-color: transparent;
+}
+
+.btn-cancel {
+  border-color: #ccc;
+  background-color: transparent;
+  font-weight: 600;
+  color: #a94442;
+  margin-right: 8px;
+}
+
+.btn-cancel:hover, .btn-cancle:focus {
+  background-color: #a94442;
+  color: #fff;
 }
 
 @media (max-width: 991px) {
@@ -323,14 +346,110 @@ table {
 .vcenter {
   padding-top: 8px;;
 }
-.n {
-  width:20% !important;
+
+td.household-caret {
+  width:5% !important;
+  vertical-align: center;
+  text-align: center;
 }
 
-.tags{
-  width: 60%;
+td.household-name {
+  width:30% !important;
 }
 
-.comments {
-  width: 20%;
+td.member-name {
+  padding-left: 2em !important;
+}
+
+td.table-tags{
+  width: 55%;
+}
+
+td.table-comments {
+  width: 10%;
+}
+
+#indiv-email {
+  word-wrap: break-word;
+}
+
+.caret-hide {
+  display: none;
+}
+
+.filter-hide {
+  display: none;
+}
+
+.progress-bar {
+  background-color: #5c7a99;
+}
+
+.edit-comment {
+  width: 20px;
+  position: relative;
+  top: -2px;
+}
+
+.edit-comment a {
+  color: #fff;
+  padding: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.calling-label {
+  padding-right: 10px;
+}
+
+input[type="checkbox"] {
+   display: block;
+   margin: 3px 8px 0 0;
+   float: left;
+}
+
+.private-comment {
+  margin-top: 8px;
+}
+
+.tag-td > a {
+  width: 180px;
+}
+
+.edit-tag-td > a {
+  padding: 5px 8px !important;
+  width: 28px;
+}
+
+.delete-tag-td > a {
+  padding: 5px 8px !important;
+  width: 28px;
+}
+
+td.unseen > a {
+  font-weight: bold;
+}
+
+
+#known-anchor > i {
+  vertical-align: middle;
+}
+
+#unknown-anchor > i {
+  vertical-align: middle;
+}
+
+footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:60px;   /* Height of the footer */
+}
+
+#header {
+  height: 70px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
 }

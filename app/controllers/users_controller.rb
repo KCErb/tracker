@@ -6,12 +6,16 @@ class UsersController < ApplicationController
       current_user.filters[:known] = current_user.filters[:known] ? false : true
     when "unknown"
       current_user.filters[:unknown] = current_user.filters[:unknown] ? false : true
+    when "unread"
+      current_user.filters[:unread] = current_user.filters[:unread] ? false : true
     when "tags"
-      if current_user.filters[:tags].include? params[:body]
-        current_user.filters[:tags].sub! params["body"], ''
+      tags = current_user.filters[:tags].split(";")
+      if tags.any?{|tag| tag == params[:body]}
+        tags.delete(params["body"])
       else
-        current_user.filters[:tags] += params[:body] unless current_user.filters[:tags].include? params[:body]
+        tags << params[:body]
       end
+      current_user.filters[:tags] = tags.join(";")
     when "organization"
       if current_user.filters[:organization] == params[:organization]
         current_user.filters[:organization] = ""

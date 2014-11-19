@@ -7,21 +7,40 @@
             <%= current_user.name %>
           </h3>
         </td>
-        <td align="right">
+        <td class="calling-label" align="right">
           <span class="label label-empty"><%= current_user.calling %></span>
         </td>
       </tr>
     </table>
   </div>
   <div class="panel-body">
-    <%= form_for [member, member.comments.build],
+    <%
+      if defined? household
+        args_array = [household, household.comments.build]
+      else
+        args_array = [member, member.comments.build]
+      end
+    %>
+    <%= form_for args_array,
     remote: true,
-    html: {id: 'new-comment-form', },
+    html: {id: 'new-comment-form'},
     authenticity_token: true  do |f| %>
     <%= hidden_field_tag "comment[commenter_name]", current_user.name %>
     <%= hidden_field_tag "comment[commenter_calling]", current_user.calling %>
+    <%= hidden_field_tag "comment[commenter_lds_id]", current_user.lds_id %>
     <%= f.text_area :body, class: "new-comment-box", placeholder: "Leave a comment" %>
-    <%= f.date_select(:created_at) %>
+    <% if current_user.lds_id == '5690149565' || current_user.lds_id == '2908502366' %>
+      <%= f.date_select(:created_at) %>
+    <% end %>
+    <div class="private-comment">
+      <%= f.check_box :private %>
+      Private
+      <a id="private-explanation" tabindex="0" role="button" data-toggle="popover" data-trigger="focus"
+        data-title="Private Comments"
+        data-content="Mark this comment as 'Private' to make it visible only to you.">
+        <i class="fa fa-question-circle"></i>
+      </a>
+    </div>
     <%= f.submit "Comment", class: "btn btn-success pull-right" %>
     <% end %>
   </div>

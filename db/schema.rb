@@ -16,18 +16,36 @@ ActiveRecord::Schema.define(version: 20141022012736) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "households", force: true do |t|
+    t.text     "lds_id"
+    t.date     "moved_in"
+    t.text     "move_type"
+
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "comments", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "household_id"
+    t.boolean  "private"
+
     t.text     "body"
     t.text     "commenter_name"
     t.text     "commenter_calling"
-    t.integer  "member_id"
+    t.text     "commenter_lds_id"
+    t.text     "viewed_by"
+
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "comments", ["member_id"], name: "index_comments_on_member_id", using: :btree
+  add_index "comments", ["household_id"], name: "index_comments_on_household_id", using: :btree
 
   create_table "members", force: true do |t|
+    t.integer "household_id"
+
     t.text     "lds_id"
     t.text     "organizations"
     t.date     "moved_in"
@@ -36,9 +54,13 @@ ActiveRecord::Schema.define(version: 20141022012736) do
     t.datetime "updated_at"
   end
 
+  add_index "members", ["household_id"], name: "index_members_on_household_id", using: :btree
+
   create_table "tag_histories", force: true do |t|
     t.integer  "member_id"
+    t.integer  "household_id"
     t.integer  "tag_id"
+
     t.text     "added_by"
     t.text     "removed_by"
     t.text     "added_at"
@@ -49,6 +71,7 @@ ActiveRecord::Schema.define(version: 20141022012736) do
 
   add_index "tag_histories", ["member_id"], name: "index_tag_histories_on_member_id", using: :btree
   add_index "tag_histories", ["tag_id"], name: "index_tag_histories_on_tag_id", using: :btree
+  add_index "tag_histories", ["household_id"], name: "index_tag_histories_on_household_id", using: :btree
 
   create_table "tags", force: true do |t|
     t.text     "body"
@@ -62,6 +85,7 @@ ActiveRecord::Schema.define(version: 20141022012736) do
     t.text     "lds_id"
     t.text     "name"
     t.text     "calling"
+    t.text     "organization"
     t.text     "filters"
     t.datetime "created_at"
     t.datetime "updated_at"

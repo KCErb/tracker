@@ -1,0 +1,42 @@
+<!-- member or household = moh -->
+<% moh = household if defined? household %>
+<% moh = member if defined? member %>
+
+<div id="timeline">
+  <%= render partial: "shared/move_in", locals: {household: household} if defined? household %>
+  <%= render partial: "shared/move_in", locals: {member: member} if defined? member %>
+  <div class="timeline-spacer"></div>
+  <!-- Other spacers get rendered in the block since we want to skip it for private comments -->
+  <% moh.timeline_data.each do |arr| %>
+    <% if arr[1].is_a? Comment %>
+      <!-- Check if comment is private before rendering -->
+      <% comment = arr[1] %>
+      <% if comment.private %>
+        <% if current_user.lds_id == comment.commenter_lds_id %>
+          <%= render partial: comment %>
+          <div class="timeline-spacer"></div>
+        <% end %>
+      <% else %>
+        <%= render partial: comment %>
+        <div class="timeline-spacer"></div>
+      <% end %>
+    <% else %>
+      <% tag_history = arr[3] %>
+      <% tag = tag_history.tag%>
+      <% next if tag.organization != "All" &&
+                  tag.organization != "Internal" &&
+                  tag.organization != current_user.organization %>
+      <%= render partial: 'tag_histories/tag_history',
+                 locals: {changed_time: arr[0],
+                          person: arr[1][0],
+                          changed: arr[2],
+                          index: arr[4],
+                          tag_history: tag_history,
+                          tag: tag } %>
+      <div class="timeline-spacer"></div>
+    <% end %>
+  <% end #each %>
+
+  <%= render partial: 'comments/new_comment', locals: {household: household} if defined? household %>
+  <%= render partial: 'comments/new_comment', locals: {member: member} if defined? member %>
+</div>

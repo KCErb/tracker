@@ -1,0 +1,24 @@
+<div id="info-box">
+    <div class="row">
+      <!-- Address -->
+      <div id='info-box-address'>
+        <div class="member-info-subheader col-xs-5 col-sm-2 col-md-4 info-padded">
+          Address:
+        </div>
+        <div class="col-xs-7 col-sm-4 col-md-8 info-padded">
+          <div id='indiv-address'> Loading . . . </div>
+        </div>
+      </div>
+      <!-- Other contact info  -->
+      <% %w(phone email organizations priesthood).each do |info_item| %>
+      <div id='info-box-<%= info_item %>'>
+        <div class="member-info-subheader col-xs-5 col-sm-2 col-md-4 info-padded">
+          <%= info_item.capitalize %>:
+        </div>
+        <div class="col-xs-7 col-sm-4 col-md-8 info-padded">
+          <div id='indiv-<%= info_item %>'> none </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+</div>

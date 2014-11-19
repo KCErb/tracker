@@ -8,13 +8,46 @@
           <span class="time-ago"> commented <%= time_ago_in_words(comment.created_at) %> ago</span>
         </h3>
       </td>
-      <td align="right">
+      <td class='calling-label' align="right">
         <span class="label label-empty"><%= comment.commenter_calling %></span>
+      </td>
+      <td class="edit-comment">
+        <% if comment.household %>
+          <%= link_to create_edit_box_path(household_id: comment.household.id, id: comment.id),
+            remote: true  do %>
+              <i class="fa fa-pencil"></i>
+          <% end %>
+        <% else %>
+          <%= link_to create_edit_box_path(member_id: comment.member.id, id: comment.id),
+            remote: true do %>
+              <i class="fa fa-pencil"></i>
+          <% end %>
+        <% end %>
+      </td>
+      <td class="edit-comment">
+
+        <%
+          if comment.household
+            args_arr = [comment.household, comment]
+          else
+            args_arr = [comment.member, comment]
+          end
+        %>
+        <%= link_to args_arr,
+          method: :delete,
+          remote: true,
+          data: { confirm: 'Permanently delete comment?'},
+          authenticity_token: true  do |f| %>
+            <i class="fa fa-times"></i>
+        <% end %>
       </td>
     </tr>
   </table>
 </div>
-<div class="panel-body">
-  <%= comment.body %>
+<div id="timeline-comment-<%= comment.id %>" class="panel-body">
+  <%= simple_format(comment.body) %>
 </div>
+<% if comment.private %>
+  <div class="panel-footer">This comment is private</div>
+<% end %>
 </div>

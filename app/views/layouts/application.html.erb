@@ -2,14 +2,22 @@
 <html>
 <head>
   <title>Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <script type='text/javascript'>
+    $(document).ready(function () {
+      if ($("[rel=popover]").length) {
+        $("[rel=popover]").popover();
+      }
+    });
+  </script>
 
 </head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body class="<%= controller_name %> <%= action_name %>">
+  <%= yield %>
+</body>
 
 </html>

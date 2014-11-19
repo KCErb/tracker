@@ -7,24 +7,23 @@ class MembersController < ApplicationController
     end
   end
 
-  def modal
+  def member_modal
     @member = Member.find_by_lds_id(params[:lds_id])
+    @member.comments.all.each do |comment|
+      next if comment.viewed_by.include? current_user.lds_id
+      comment.viewed_by << current_user.lds_id
+      comment.save
+    end
     respond_to{|format| format.js }
   end
 
-  def member_info
+  def member_address
+    @member = Member.find_by_lds_id(params[:lds_id])
+    @household = @member.household
     cookies = session[:user_pref]
     @scraper = Scraper.new(cookies)
-    @scraper.get_member_info(params[:lds_id])
-    @member_info = @scraper.member_info
-    @member = Member.find_by_lds_id(params[:lds_id])
-    respond_to{ |format| format.js }
+    @address = @scraper.get_address(@household.lds_id)
+    respond_to{|format| format.js }
   end
 
-  def member_tags
-    @member = Member.find_by_lds_id(params[:lds_id])
-    respond_to do |format|
-      format.js
-    end
-  end
 end

@@ -10,13 +10,30 @@ Rails.application.routes.draw do
   resources :members do
     resources :comments
   end
-  resources :tags
+  resources :households do
+    resources :comments
+  end
 
-  get "/member_modal" => "members#modal", :as => "member_modal"
-  get "/member_info" => "members#member_info", :as => "member_info"
-  get "/member_tags" => "members#member_tags", :as => "member_tags"
-  patch "/update_member_tag" => "tag_histories#update", :as => "update_member_tag"
+  resources :tags
+  resources :tag_histories
+
+  get "/member_modal" => "members#member_modal", :as => "member_modal"
+  get "/household_modal" => "households#household_modal", :as => "household_modal"
+
+  get "/household_address" => "households#household_address", :as => "household_address"
+  get "/member_address" => "members#member_address", :as => "member_address"
+
+  patch "/update_tag_history" => "tag_histories#update", :as => "update_tag_history"
+
   patch "/update_filters" => "users#update_filters", :as => "update_filters"
+
   get "/update_table" => "users#update_filters", :as => "update_table"
+  get "/create_table" => "sessions#create_table", :as => "create_table"
+
+  get "/create_edit_box" => "comments#create_edit_box", :as => "create_edit_box"
+  get "/cancel_edit_comment" => "comments#cancel_edit_comment", :as => "cancel_edit_comment"
+
+  get "/create_tags_dialog" => "tags#create_dialog", :as => "create_tags_dialog"
+  get "/edit_tags_dialog" => "tags#edit_dialog", :as => "edit_tags_dialog"
 
 end

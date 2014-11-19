@@ -1,0 +1,52 @@
+<!-- member or household = moh -->
+<% moh = household if defined? household %>
+<% moh = member if defined? member %>
+<div class="tag-history">
+  <div class='row'>
+      <% case moh.move_type %>
+      <% when "moved-in" %>
+        <div class='col-xs-2 col-sm-1'>
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x light"></i>
+            <i class="fa fa-home fa-stack-1x dark"></i>
+          </span>
+        </div>
+        <div class='col-xs-10 col-sm-11 vcenter'>
+          <strong>Moved in</strong>
+          <%= time_ago_in_words(moh.moved_in) %> ago
+        </div>
+      <% when "born" %>
+        <div class='col-xs-2 col-sm-1'>
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x light"></i>
+            <i class="fa fa-birthday-cake fa-stack-1x dark"></i>
+          </span>
+        </div>
+        <div class='col-xs-10 col-sm-11 vcenter'>
+          <strong>Born</strong>
+          <%= time_ago_in_words(moh.moved_in) %> ago
+        </div>
+      <% when "tracker" %>
+        <div class='col-xs-2 col-sm-1'>
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x light"></i>
+            <i class="fa fa-home fa-stack-1x dark"></i>
+          </span>
+        </div>
+        <div class='col-xs-10 col-sm-11 vcenter'>
+          Imported into the <strong>Tracker</strong> 
+          <%= time_ago_in_words(moh.moved_in) %> ago
+        </div>
+      <% else %>
+        <div class='col-xs-2 col-sm-1'>
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x light"></i>
+            <i class="fa fa-question fa-stack-1x dark"></i>
+          </span>
+        </div>
+        <div class='col-xs-10 col-sm-11 vcenter'>
+          It is <strong>unknown</strong> when this member moved into the ward.
+        </div>
+      <% end %>
+  </div>
+</div>

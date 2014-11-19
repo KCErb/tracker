@@ -1,0 +1,25 @@
+<div id="timeline-comment-<%= comment.id %>" class="panel-body">
+
+  <%
+    if defined? household
+      cancel_path = cancel_edit_comment_path(household_id: comment.household.id, id: comment.id)
+      edit_path = edit_household_comment_path(household, comment)
+    else
+      cancel_path = cancel_edit_comment_path(member_id: comment.member.id, id: comment.id)
+      edit_path = edit_member_comment_path(member, comment)
+    end
+  %>
+  <!-- Dang! Syntax error??? -->
+  <%= form_for :comment,
+    url: edit_path,
+    method: :get,
+    remote: true,
+    html: {id: 'edit-comment-form'},
+    authenticity_token: true  do |f| %>
+    <%= f.text_area :body, class: "new-comment-box" %>
+    <%= f.submit "Update Comment", class: "btn btn-success pull-right" %>
+  <% end %>
+  <%= button_to cancel_path, remote: true, method: :get, class: "btn-cancel btn pull-right"  do %>
+    Cancel
+  <% end %>
+</div>

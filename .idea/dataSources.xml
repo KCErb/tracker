@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3677683458">
+    <data-source source="LOCAL" name="Rails tracker: development" uuid="baa010e4-c8f5-43dc-aade-eb3b5c3398b9">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:tracker_development</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails tracker: test" uuid="e117ff59-82ae-4a87-8491-3f2954306ed7">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:tracker_test</jdbc-url>
+      <schema-pattern>tracker_test.*</schema-pattern>
+      <default-schemas>tracker_test.*</default-schemas>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails tracker: production" uuid="550c55d8-db5b-41bb-89d8-c8cda29e594e">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:tracker_production</jdbc-url>
+      <user-name>tracker</user-name>
+      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddffedff8dfebdfe9dfe1dfefdff8dff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

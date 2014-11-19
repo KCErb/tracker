@@ -1,5 +1,6 @@
 class TagHistory < ActiveRecord::Base
   belongs_to :member
+  belongs_to :household
   belongs_to :tag
   serialize :added_by, Array
   serialize :added_at, Array

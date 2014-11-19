@@ -1,21 +1,35 @@
-<div id="member-tags">
+<!-- member or household = moh -->
+<div id="tags-editor">
     <div class="row">
       <!--
       organization: "All"
       "organization = ? OR organization =?", "All", "Internal"
       -->
-      <% Tag.where(organization: "All").each do |tag| %>
-        <% tag_history = TagHistory.where(member_id: member.id, tag_id: tag.id).first %>
+      <% user_tags = Tag.where("organization = ? OR organization =?", "All", current_user.organization) %>
+      <% user_tags.each do |tag| %>
+
+        <% if defined? household %>
+          <% tag_history = TagHistory.where(household_id: household.id, tag_id: tag.id).first %>
+          <% moh = household %>
+          <% type = 'household' %>
+        <% else %>
+          <% tag_history = TagHistory.where(member_id: member.id, tag_id: tag.id).first %>
+          <% moh = member %>
+          <% type = 'member' %>
+        <% end %>
+
         <% if tag_history %>
           <% active = tag_history.active? %>
         <% end %>
+
         <div class="col-xs-1 col-sm-2 col-md-4 text-right spaced-col">
         <%= form_for tag,
           remote: true,
-          url: "/update_member_tag",
+          url: "/update_tag_history",
           authenticity_token: true  do |f| %>
-          <%= hidden_field_tag "tag_id", tag.id %>
-            <%= hidden_field_tag "member_id", member.id %>
+            <%= hidden_field_tag "tag_id", tag.id %>
+            <%= hidden_field_tag "moh_id", moh.id %>
+            <%= hidden_field_tag "type", type %>
             <% if active %>
               <%= hidden_field_tag "removed_by", current_user.name %>
               <%= hidden_field_tag "removed_at", Time.zone.now %>
