@@ -58,3 +58,6 @@ gem 'font-awesome-rails'
 
 # Sidekiq for making that big table
 gem 'sidekiq'
+
+# New Relic to solve Memory Leak
+gem 'newrelic_rpm'
