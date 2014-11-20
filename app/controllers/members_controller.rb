@@ -9,7 +9,7 @@ class MembersController < ApplicationController
 
   def member_modal
     @member = Member.find_by_lds_id(params[:lds_id])
-    @member.comments.all.each do |comment|
+    @member.comments.find_each do |comment|
       next if comment.viewed_by.include? current_user.lds_id
       comment.viewed_by << current_user.lds_id
       comment.save

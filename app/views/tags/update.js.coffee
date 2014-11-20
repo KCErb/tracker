@@ -1,6 +1,5 @@
-$('#custom-tag-<%= @tag.id %>').replaceWith("Deleting . . .")
 #Iterate through all households and update tags span
-<% Household.all.each do |household| %>
+<% Household.find_each do |household| %>
 <% if household.tags.count > 0 %>
 household_tags = $("tr[data-row-type='household'][data-id=<%= household.lds_id =%>] td[class='table-tags']")
 <% tag_html = "" %>

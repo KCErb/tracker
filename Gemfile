@@ -55,3 +55,6 @@ end
 
 # Fontawesome!
 gem 'font-awesome-rails'
+
+# Sidekiq for making that big table
+gem 'sidekiq'
