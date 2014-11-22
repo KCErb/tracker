@@ -1,5 +1,3 @@
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -38,8 +36,6 @@ Rails.application.routes.draw do
 
   get "/create_tags_dialog" => "tags#create_dialog", :as => "create_tags_dialog"
   get "/edit_tags_dialog" => "tags#edit_dialog", :as => "edit_tags_dialog"
-
-  mount Sidekiq::Web, at: "/sidekiq"
 
   get "/init_polling" => "users#init_polling", :as => "init_polling"
   get "/check_status" => "users#check_status", :as => "check_status"

@@ -13,13 +13,13 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
+#turbolinks
+gem 'turbolinks'
+gem 'jquery-turbolinks'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-# Make turbo-links not kill the nodes
-gem 'jquery-turbolinks'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -39,6 +39,7 @@ ruby '2.1.2'
 
 # Use unicorn as the app server
 gem 'unicorn'
+gem 'unicorn-worker-killer'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
@@ -55,11 +56,6 @@ end
 
 # Fontawesome!
 gem 'font-awesome-rails'
-
-# Sidekiq for making that big table and the others for displaying sidekiq progress
-gem 'sidekiq'
-gem 'sinatra', require: false
-gem 'slim'
 
 # New Relic to solve Memory Leak
 gem 'newrelic_rpm'

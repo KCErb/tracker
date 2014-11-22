@@ -13,9 +13,9 @@ before_fork do |server, worker|
     ActiveRecord::Base.connection.disconnect!
 end
 
-before_fork do |server, worker|
-   @sidekiq_pid ||= spawn("bundle exec sidekiq -c 2")
-end
+#before_fork do |server, worker|
+#   @sidekiq_pid ||= spawn("bundle exec sidekiq -c 2")
+#end
 
 after_fork do |server, worker|
   Signal.trap 'TERM' do
@@ -25,7 +25,7 @@ after_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.establish_connection
 end
-
+=begin
 after_fork do |server, worker|
   Sidekiq.configure_client do |config|
     config.redis = { :size => 1 }
@@ -34,3 +34,4 @@ after_fork do |server, worker|
     config.redis = { :size => 5 }
   end
 end
+=end

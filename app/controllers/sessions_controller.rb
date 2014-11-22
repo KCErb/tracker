@@ -9,7 +9,11 @@ class SessionsController < ApplicationController
     cookies = session[:user_pref]
     scraper = Scraper.new(cookies)
     if scraper.session_still_valid?
-      ScraperWorker.perform_async(cookies)
+      #ScraperWorker.perform_async(cookies)
+      Thread.new do
+        scraper.create_table
+        ActiveRecord::Base.connection.close
+      end
       respond_to{|format| format.js } #does nothing
     else
       flash[:notice] = "You're not logged in anymore."
@@ -22,6 +26,7 @@ class SessionsController < ApplicationController
     @table = current_user.table
     respond_to{|format| format.js}
     @table = nil
+    GC.start
   end
 
   def create

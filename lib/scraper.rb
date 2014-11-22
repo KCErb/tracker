@@ -1,5 +1,5 @@
 class Scraper
-  TESTING = false
+  TESTING = true
 
   attr_reader :member_list, :user, :member_info, :cookies
 
@@ -548,7 +548,7 @@ class Scraper
       @user.table_progress += 1.0 / import_total * 100
       @user.save
     end
-
+    
     #make an empty anchor for non members to borrow and stick it in the member rows
     @members_html['non-member-template'] = %Q(
       <tr data-row-type='member'
