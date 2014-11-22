@@ -1,5 +1,5 @@
 class Scraper
-  TESTING = true
+  TESTING = false
 
   attr_reader :member_list, :user, :member_info, :cookies
 
