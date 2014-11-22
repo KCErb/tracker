@@ -56,8 +56,10 @@ end
 # Fontawesome!
 gem 'font-awesome-rails'
 
-# Sidekiq for making that big table
+# Sidekiq for making that big table and the others for displaying sidekiq progress
 gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 # New Relic to solve Memory Leak
 gem 'newrelic_rpm'

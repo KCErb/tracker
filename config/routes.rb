@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -26,8 +28,9 @@ Rails.application.routes.draw do
   patch "/update_tag_history" => "tag_histories#update", :as => "update_tag_history"
 
   patch "/update_filters" => "users#update_filters", :as => "update_filters"
-
   get "/update_table" => "users#update_filters", :as => "update_table"
+
+  get "/init_table" => "sessions#init_table", :as => "init_table"
   get "/create_table" => "sessions#create_table", :as => "create_table"
 
   get "/create_edit_box" => "comments#create_edit_box", :as => "create_edit_box"
@@ -35,5 +38,10 @@ Rails.application.routes.draw do
 
   get "/create_tags_dialog" => "tags#create_dialog", :as => "create_tags_dialog"
   get "/edit_tags_dialog" => "tags#edit_dialog", :as => "edit_tags_dialog"
+
+  mount Sidekiq::Web, at: "/sidekiq"
+
+  get "/init_polling" => "users#init_polling", :as => "init_polling"
+  get "/check_status" => "users#check_status", :as => "check_status"
 
 end

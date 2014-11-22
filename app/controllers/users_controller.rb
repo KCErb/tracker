@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   respond_to :js
+
   def update_filters
     case params[:type]
     when "known"
@@ -31,5 +32,17 @@ class UsersController < ApplicationController
 
     @filters = current_user.filters.to_json.html_safe
     respond_with( @filters, :layout => !request.xhr? )
+  end
+
+  def init_polling
+    respond_to{|format| format.js }
+  end
+
+  def check_status
+    @user = current_user
+    @stats = {progress: @user.table_progress, finished: @user.table_ready}
+    respond_to do |format|
+      format.json { render json: @stats }
+    end
   end
 end

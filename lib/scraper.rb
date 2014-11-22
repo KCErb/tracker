@@ -53,7 +53,6 @@ class Scraper
   end
 
   def user
-    #only called on auth, so I reset filters
     m = @member_list.match(/(prop42 = )(.*?);/)
     lds_id = m[2].to_s
     user = User.find_by_lds_id(lds_id)
@@ -68,6 +67,8 @@ class Scraper
     @user.filters[:tags] = ""
     @user.filters[:search] = ""
     @user.filters[:organization] = ""
+    @user.table_ready = false
+    @user.table_progress = 0.0
     @user.save
     @user
   end
@@ -415,7 +416,6 @@ class Scraper
   def create_table
     get_member_list unless @member_list
     get_households
-
     # update those who were imported by the tracker if applicable
     if can_fix?
       needs_fixin = Member.where(move_type: "tracker").all
@@ -424,6 +424,7 @@ class Scraper
         fix_that_which needs_fixin
       end
     end
+
     @table = %Q(
     <table id='households-table' class='table'>
     <thead>
@@ -439,7 +440,9 @@ class Scraper
     user
     @page = Nokogiri::HTML(@member_list)
 
-    #TAGS - edited
+    table_rows = @page.xpath("//table[@id='dataTable']/tbody/tr")
+
+    #TAGS
     tags = Tag.all
     create_base_tags if tags.length == 0
 
@@ -447,7 +450,7 @@ class Scraper
     @individuals_anchors = {}
     @members_html = {}
 
-    @page.xpath("//table[@id='dataTable']/tbody/tr").each_with_index do |row, index|
+    table_rows.each_with_index do |row, index|
       gender = row.xpath("./*[contains(concat(' ', @class, ' '), ' sex ')]").inner_html
       gender = gender.downcase.include?("f") ? "female" : "male"
       email = row.xpath("./*[contains(concat(' ', @class, ' '), ' email ')]/a/span").inner_html.sub(/<i.*<\/i>/,'')
@@ -489,6 +492,9 @@ class Scraper
       @individuals_anchors[lds_id] = anchor.to_html if lds_id
     end
 =end
+
+    #counters for progress
+    import_total = @households.length + @individuals_anchors.length
 
     @individuals_anchors.each do |lds_id, html_anchor|
       #attempt to retrieve or create member
@@ -539,6 +545,8 @@ class Scraper
         </td>
         </tr>
       )
+      @user.table_progress += 1.0 / import_total * 100
+      @user.save
     end
 
     #make an empty anchor for non members to borrow and stick it in the member rows
@@ -695,10 +703,16 @@ class Scraper
 
         end #reverse household members
       end #if household members exist
+      @user.table_progress += 1.0 / import_total * 100
+      @user.save
     end #households.each
 
     @table += @table_body
     @table += '</tbody></table>'
+    @user.table_ready = true
+    @user.table_progress = 100
+    @user.table = @table
+    @user.save
   end
 
   def get_address(lds_id)
@@ -842,4 +856,5 @@ class Scraper
     get_member_list unless @member_list
     @member_list.include?("<title>Member List</title>")
   end
+
 end

@@ -5,17 +5,23 @@ class SessionsController < ApplicationController
   def index
   end
 
-  def create_table
+  def init_table
     cookies = session[:user_pref]
-    @scraper = Scraper.new(cookies)
-
-    if @scraper.session_still_valid?
-      @table = @scraper.create_table
-      respond_to{|format| format.js }
+    scraper = Scraper.new(cookies)
+    if scraper.session_still_valid?
+      ScraperWorker.perform_async(cookies)
+      respond_to{|format| format.js } #does nothing
     else
       flash[:notice] = "You're not logged in anymore."
       respond_to{|format| format.js {render :js => "window.location.href='/'"} }
     end
+    scraper = nil
+  end
+
+  def create_table
+    @table = current_user.table
+    respond_to{|format| format.js}
+    @table = nil
   end
 
   def create
