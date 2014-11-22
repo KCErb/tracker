@@ -1,5 +1,5 @@
 class Scraper
-  TESTING = false
+  TESTING = true
 
   attr_reader :member_list, :user, :member_info, :cookies
 
@@ -416,15 +416,22 @@ class Scraper
   def create_table
     get_member_list unless @member_list
     get_households
+    user
+    @user.progress_message = 'Fetching Info from lds.org'
+    @user.save
+
     # update those who were imported by the tracker if applicable
     if can_fix?
       needs_fixin = Member.where(move_type: "tracker").all
       needs_fixin += Household.where(move_type: "tracker").all
       if needs_fixin.length > 0
+        @user.progress_message = 'Updating Member Info'
+        @user.save
         fix_that_which needs_fixin
       end
     end
-
+    @user.progress_message = 'Parsing Info from lds.org'
+    @user.save
     @table = %Q(
     <table id='households-table' class='table'>
     <thead>
@@ -435,9 +442,7 @@ class Scraper
     </thead>
     <tbody>
     )
-    #create page only called on refresh. So refreshing will kill all filters
-    # since I'm calling user here
-    user
+
     @page = Nokogiri::HTML(@member_list)
 
     table_rows = @page.xpath("//table[@id='dataTable']/tbody/tr")
@@ -495,6 +500,9 @@ class Scraper
 
     #counters for progress
     import_total = @households.length + @individuals_anchors.length
+
+    @user.progress_message = 'Importing Members'
+    @user.save
 
     @individuals_anchors.each do |lds_id, html_anchor|
       #attempt to retrieve or create member
@@ -600,6 +608,8 @@ class Scraper
     #    * others same
     #    * household-members['headOfHouseholdId'] = Mom's lds_id
     #    * householdProfile['headOfHousehold']['individualId'] is -1
+    @user.progress_message = 'Importing Households'
+    @user.save
     #HOUSEHOLDS
     @households.each_with_index do |household_members, index|
       lds_id = household_members["headOfHouseholdId"].to_s
@@ -706,7 +716,8 @@ class Scraper
       @user.table_progress += 1.0 / import_total * 100
       @user.save
     end #households.each
-
+    @user.progress_message = 'Done! Just finishing up now...'
+    @user.save
     @table += @table_body
     @table += '</tbody></table>'
     @user.table_ready = true

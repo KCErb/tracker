@@ -7,11 +7,13 @@ poll = ->
       url: "/check_status"
       success: (data) ->
         tableProgress = $('#progress-bar')
+        progressMessage = $('#progress-message')
         if data.finished
           $.get '/create_table'
         else
-          console.log String(data.progress) + '%'
+          console.log String(data.message) + '%'
           tableProgress.css('width', String(data.progress) + '%').attr('aria-valuenow', data.progress)
+          progressMessage.html(data.message)
           poll()
 
       dataType: "json"

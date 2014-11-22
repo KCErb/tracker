@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
   def check_status
     @user = current_user
-    @stats = {progress: @user.table_progress, finished: @user.table_ready}
+    @stats = {progress: @user.table_progress, finished: @user.table_ready, message: @user.progress_message}
     respond_to do |format|
       format.json { render json: @stats }
     end
