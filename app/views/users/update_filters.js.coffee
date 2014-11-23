@@ -112,7 +112,7 @@ $("#households-table tbody tr[data-row-type='household']").each ->
   #show all if neither checked
   if filters.known == false && filters.unknown == false
     passesSecondFilters = true
-console.log "middle"
+  console.log "middle"
   #restripe table
   #remove all even odd info
   household.removeClass("even")
