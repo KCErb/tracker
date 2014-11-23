@@ -50,50 +50,50 @@ unknownCount = 0
 unreadCount = 0
 
 $("#households-table tbody tr[data-row-type='household']").each ->
-  console.log "beginning"
+
   household = $(this)
   householdId = household.data('id')
   members = $('[data-head="'+ householdId + '"][data-row-type="member"]')
-  console.log "check0"
+
   household_is_known = household.hasClass("known")
   household_is_unknown = household.hasClass("unknown")
   household_name = household.find('td.household-name')
   household_has_unseen_comments = household_name.hasClass("unseen")
-  console.log "check1"
+
   unless household_has_unseen_comments
     members.each ->
       member_name = $(this).find('td.member-name')
       household_has_unseen_comments = true if member_name.hasClass("unseen")
 
   passing_filters = true
-  console.log "check2"
+  console.log "checking tags"
   #Now, check each filter, stopping checks once one is tripped
   if filters.tags isnt '' && passing_filters
     tagsArr = filters.tags.split(";")
     passing_filters = tagsHousehold(household, tagsArr)
     passing_filters = tagsMembers(members, tagsArr) unless passing_filters
-
+  console.log "checks tags ok, can pass search?"
   if filters.search isnt '' && passing_filters
     search_term = filters.search.toLowerCase()
     passing_filters = searchHousehold(household, search_term)
     passing_filters = searchMembers(members, search_term) unless passing_filters
-
+  console.log "checks search ok, can pass organization?"
   if filters.organization isnt '' && passing_filters
     passing_filters = organizationHousehold(household)
     passing_filters = organizationMembers(members) unless passing_filters
-  console.log "check3"
+  console.log "passes organizations ok end"
   #Count up known and unknowns and unreads that have survived the filters
   if passing_filters
     knownCount += 1 if household_is_known
     unknownCount += 1 if household_is_unknown
     unreadCount += 1 if household_has_unseen_comments
-  console.log "check4"
+
   #selecting for read only?
   if filters.unread && household_has_unseen_comments
     passing_filters = true
   else
     passing_filters = false if filters.unread
-  console.log "check5"
+
   # passes all not-known-unknown-unread filters. Need this distinction to count
   # knowns and unknowns and unread correctly
   passesFirstFilters = passing_filters
@@ -103,7 +103,7 @@ $("#households-table tbody tr[data-row-type='household']").each ->
     passesSecondFilters = true if household_is_unknown
   else
     passesSecondFilters = false if household_is_unknown
-  console.log "check6"
+
   if filters.known
     passesSecondFilters = true if household_is_known
   else
@@ -112,7 +112,7 @@ $("#households-table tbody tr[data-row-type='household']").each ->
   #show all if neither checked
   if filters.known == false && filters.unknown == false
     passesSecondFilters = true
-  console.log "middle"
+
   #restripe table
   #remove all even odd info
   household.removeClass("even")
@@ -139,7 +139,6 @@ $("#households-table tbody tr[data-row-type='household']").each ->
     members.each ->
       $(this).removeClass("filter-show")
       $(this).addClass("filter-hide")
-  console.log "end"
 #end each household
 
 if visibleRowCounter == 0
