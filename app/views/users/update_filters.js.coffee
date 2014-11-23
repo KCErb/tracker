@@ -41,7 +41,6 @@ organizationMembers = (members) ->
   belongs_to_organization
 
 # RUNNING CODE
-console.log "beginning"
 filters = <%= @filters %>
 
 #go through each household and check to see if it fails any filter
@@ -51,6 +50,7 @@ unknownCount = 0
 unreadCount = 0
 
 $("#households-table tbody tr[data-row-type='household']").each ->
+  console.log "beginning"
   household = $(this)
   householdId = household.data('id')
   members = $('[data-head="'+ householdId + '"][data-row-type="member"]')
@@ -139,6 +139,7 @@ $("#households-table tbody tr[data-row-type='household']").each ->
     members.each ->
       $(this).removeClass("filter-show")
       $(this).addClass("filter-hide")
+  console.log "end"
 #end each household
 
 if visibleRowCounter == 0
@@ -172,4 +173,3 @@ $('#unread-anchor').empty().append( unreadString + String(unreadCount) + " Unrea
 $('#tags-filter-dropdown').replaceWith("<%= escape_javascript( render partial: 'tags_filter_dropdown') %>")
 
 $('#organization-filter-dropdown').replaceWith("<%= escape_javascript( render partial: 'organization_filter_dropdown') %>")
-console.log "end"
