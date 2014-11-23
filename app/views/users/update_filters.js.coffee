@@ -41,6 +41,7 @@ organizationMembers = (members) ->
   belongs_to_organization
 
 # RUNNING CODE
+console.log "this runs"
 filters = <%= @filters %>
 
 #go through each household and check to see if it fails any filter

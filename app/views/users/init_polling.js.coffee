@@ -11,7 +11,6 @@ poll = ->
         if data.finished
           $.get '/create_table'
         else
-          console.log String(data.message) + '%'
           tableProgress.css('width', String(data.progress) + '%').attr('aria-valuenow', data.progress)
           progressMessage.html(data.message)
           poll()
