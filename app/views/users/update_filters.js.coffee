@@ -27,6 +27,7 @@ searchMembers = (members, search_term) ->
   any_match_search
 
 organizationHousehold = (household) ->
+  console.log "inside organ household!"
   organizations = household.data('organization')
   if organizations
     organizations.indexOf(filters.organization) > -1
@@ -37,7 +38,9 @@ organizationMembers = (members) ->
   belongs_to_organization = false
   members.each ->
     organizations = $(this).data("organization")
-    belongs_to_organization = true if (organizations.indexOf(filters.organization) > -1)
+    if organizations
+      belongs_to_organization = true if (organizations.indexOf(filters.organization) > -1)
+
   belongs_to_organization
 
 # RUNNING CODE
@@ -77,7 +80,8 @@ $("#households-table tbody tr[data-row-type='household']").each ->
     search_term = filters.search.toLowerCase()
     passing_filters = searchHousehold(household, search_term)
     passing_filters = searchMembers(members, search_term) unless passing_filters
-  console.log "checks search ok, can pass organization?"
+  console.log "checks search ok, can pass organization? I'll bet not. Let's save some time"
+  console.log filters.organization
   if filters.organization isnt '' && passing_filters
     passing_filters = organizationHousehold(household)
     passing_filters = organizationMembers(members) unless passing_filters
