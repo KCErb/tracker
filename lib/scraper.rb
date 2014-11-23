@@ -795,7 +795,7 @@ class Scraper
     #page_valid = ward_id == "'2968:First Ward'"
 
     case
-    when @member_list.include?("<title>Member List</title>") && page_valid && in_ward?
+    when @member_list.include?("<title>Member List</title>") && in_ward?
       :authorized
     when @member_list.include?("<title>Member List</title>") && !in_ward?
       :wrong_ward
