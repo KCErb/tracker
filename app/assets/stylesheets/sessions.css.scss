@@ -219,6 +219,21 @@ html body {
   /*background: 0;
   background: #fff;*/
   font-weight: 300;
+  height: 100%;
+}
+
+#wrap {min-height: 100%;}
+
+#main {
+  overflow:auto;
+	padding-bottom: 25px;
+}  /* must be same height as the footer */
+
+#footer {
+  position: relative;
+	margin-top: 0px; /* negative value of footer height */
+	height: 150px;
+	clear:both;
 }
 
 table.table th {
