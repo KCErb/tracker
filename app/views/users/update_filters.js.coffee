@@ -41,7 +41,7 @@ organizationMembers = (members) ->
   belongs_to_organization
 
 # RUNNING CODE
-console.log "this runs"
+console.log "beginning"
 filters = <%= @filters %>
 
 #go through each household and check to see if it fails any filter
@@ -112,7 +112,7 @@ $("#households-table tbody tr[data-row-type='household']").each ->
   #show all if neither checked
   if filters.known == false && filters.unknown == false
     passesSecondFilters = true
-
+console.log "middle"
   #restripe table
   #remove all even odd info
   household.removeClass("even")
@@ -172,3 +172,4 @@ $('#unread-anchor').empty().append( unreadString + String(unreadCount) + " Unrea
 $('#tags-filter-dropdown').replaceWith("<%= escape_javascript( render partial: 'tags_filter_dropdown') %>")
 
 $('#organization-filter-dropdown').replaceWith("<%= escape_javascript( render partial: 'organization_filter_dropdown') %>")
+console.log "end"
