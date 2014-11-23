@@ -790,9 +790,9 @@ class Scraper
     get_member_list unless @member_list
 
     #check that member list is well formed, i.e. I'm afraid this prop## stuff is fragile
-    m = @member_list.match(/(prop2 = )(.*?);/)
-    ward_id = m[2]
-    page_valid = ward_id == "'2968:First Ward'"
+    #m = @member_list.match(/(prop2 = )(.*?);/)
+    #ward_id = m[2]
+    #page_valid = ward_id == "'2968:First Ward'"
 
     case
     when @member_list.include?("<title>Member List</title>") && page_valid && in_ward?
