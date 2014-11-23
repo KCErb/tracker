@@ -27,7 +27,7 @@ searchMembers = (members, search_term) ->
   any_match_search
 
 organizationHousehold = (household) ->
-  console.log "inside organ household!"
+
   organizations = household.data('organization')
   if organizations
     organizations.indexOf(filters.organization) > -1
@@ -69,23 +69,22 @@ $("#households-table tbody tr[data-row-type='household']").each ->
       household_has_unseen_comments = true if member_name.hasClass("unseen")
 
   passing_filters = true
-  console.log "checking tags"
+
   #Now, check each filter, stopping checks once one is tripped
   if filters.tags isnt '' && passing_filters
     tagsArr = filters.tags.split(";")
     passing_filters = tagsHousehold(household, tagsArr)
     passing_filters = tagsMembers(members, tagsArr) unless passing_filters
-  console.log "checks tags ok, can pass search?"
+
   if filters.search isnt '' && passing_filters
     search_term = filters.search.toLowerCase()
     passing_filters = searchHousehold(household, search_term)
     passing_filters = searchMembers(members, search_term) unless passing_filters
-  console.log "checks search ok, can pass organization? I'll bet not. Let's save some time"
-  console.log filters.organization
+
   if filters.organization isnt '' && passing_filters
     passing_filters = organizationHousehold(household)
     passing_filters = organizationMembers(members) unless passing_filters
-  console.log "passes organizations ok end"
+
   #Count up known and unknowns and unreads that have survived the filters
   if passing_filters
     knownCount += 1 if household_is_known
