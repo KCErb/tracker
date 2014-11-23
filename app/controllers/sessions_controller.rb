@@ -9,7 +9,11 @@ class SessionsController < ApplicationController
     cookies = session[:user_pref]
     scraper = Scraper.new(cookies)
     if scraper.session_still_valid?
-      #ScraperWorker.perform_async(cookies)
+      current_user.table_ready = false
+      current_user.table_progress = 0.0
+      current_user.progress_message = "Loading Data"
+      current_user.table = ''
+      current_user.save
       Thread.new do
         scraper.create_table
         ActiveRecord::Base.connection.close
@@ -26,6 +30,8 @@ class SessionsController < ApplicationController
     @table = current_user.table
     respond_to{|format| format.js}
     @table = nil
+    current_user.table = ''
+    current_user.save
     GC.start
   end
 

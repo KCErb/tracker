@@ -1,5 +1,9 @@
 class Scraper
-  TESTING = false
+  if Rails.env.production?
+    TESTING = false
+  else
+    TESTING = true
+  end
 
   attr_reader :member_list, :user, :member_info, :cookies
 
@@ -67,8 +71,6 @@ class Scraper
     @user.filters[:tags] = ""
     @user.filters[:search] = ""
     @user.filters[:organization] = ""
-    @user.table_ready = false
-    @user.table_progress = 0.0
     @user.save
     @user
   end
@@ -417,8 +419,6 @@ class Scraper
     get_member_list unless @member_list
     get_households
     user
-    @user.progress_message = 'Fetching Info from lds.org'
-    @user.save
 
     # update those who were imported by the tracker if applicable
     if can_fix?
@@ -430,7 +430,7 @@ class Scraper
         fix_that_which needs_fixin
       end
     end
-    @user.progress_message = 'Parsing Info from lds.org'
+    @user.progress_message = 'Parsing Data'
     @user.save
     @table = %Q(
     <table id='households-table' class='table'>
@@ -716,7 +716,7 @@ class Scraper
       @user.table_progress += 1.0 / import_total * 100
       @user.save
     end #households.each
-    @user.progress_message = 'Done! Just finishing up now...'
+    @user.progress_message = 'Done!'
     @user.save
     @table += @table_body
     @table += '</tbody></table>'
