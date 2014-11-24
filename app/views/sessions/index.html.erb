@@ -4,6 +4,20 @@
 <div id="create-tag-modal">
 </div>
 
+<script type="application/json" id="filters">
+    {
+        "known": false,
+        "unknown": false,
+        "unread": false,
+        "tags" : [],
+        "search" : "",
+        "organization" : "",
+        "update_category" : "",
+        "update_value" : "",
+        "update_id" : null
+    }
+</script>
+
 <div class="container">
   <h2 class="page-title">Tracker</h2>
   <%= render partial: "navbar" %>

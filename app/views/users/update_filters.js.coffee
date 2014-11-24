@@ -1,3 +1,34 @@
+# UPDATE FILTERS
+window.updateFilters = (source, value, id) ->
+  filters = JSON.parse($('#filters').html())
+  filters.update_category = source
+  filters.update_value = value
+  filters.update_id = id
+  switch source
+    when 'known'
+      if filters.known then filters.known = false else filters.known = true
+    when 'unknown'
+      if filters.unknown then filters.unknown = false else filters.unknown = true
+    when 'unread'
+      if filters.unread then filters.unread = false else filters.unread = true
+    when 'tags'
+      index = filters.tags.indexOf(value);
+      if index > -1
+        filters.tags.splice(index,1)
+      else
+        filters.tags.push(value)
+    when 'organization'
+      if filters.organization == value
+        filters.organization = ''
+      else
+        filters.organization = value
+
+  #hold off on search support for the moment
+
+  filtersString = JSON.stringify(filters);
+  $('#filters').html(filtersString)
+  window.filterTable()
+
 # FUNCTION DEFINITIONS
 tagsHousehold = (household, tagsArr) ->
   household_has_tag = false
@@ -27,7 +58,6 @@ searchMembers = (members, search_term) ->
   any_match_search
 
 organizationHousehold = (household) ->
-
   organizations = household.data('organization')
   if organizations
     organizations.indexOf(filters.organization) > -1
@@ -43,18 +73,7 @@ organizationMembers = (members) ->
 
   belongs_to_organization
 
-# RUNNING CODE
-filters = <%= @filters %>
-
-#go through each household and check to see if it fails any filter
-visibleRowCounter = 0 #for striping table
-knownCount = 0
-unknownCount = 0
-unreadCount = 0
-
-$("#households-table tbody tr[data-row-type='household']").each ->
-
-  household = $(this)
+filterHousehold = (household) ->
   householdId = household.data('id')
   members = $('[data-head="'+ householdId + '"][data-row-type="member"]')
 
@@ -69,10 +88,9 @@ $("#households-table tbody tr[data-row-type='household']").each ->
       household_has_unseen_comments = true if member_name.hasClass("unseen")
 
   passing_filters = true
-
   #Now, check each filter, stopping checks once one is tripped
-  if filters.tags isnt '' && passing_filters
-    tagsArr = filters.tags.split(";")
+  if filters.tags.length isnt 0 && passing_filters
+    tagsArr = filters.tags
     passing_filters = tagsHousehold(household, tagsArr)
     passing_filters = tagsMembers(members, tagsArr) unless passing_filters
 
@@ -87,9 +105,9 @@ $("#households-table tbody tr[data-row-type='household']").each ->
 
   #Count up known and unknowns and unreads that have survived the filters
   if passing_filters
-    knownCount += 1 if household_is_known
-    unknownCount += 1 if household_is_unknown
-    unreadCount += 1 if household_has_unseen_comments
+    window.knownCount += 1 if household_is_known
+    window.unknownCount += 1 if household_is_unknown
+    window.unreadCount += 1 if household_has_unseen_comments
 
   #selecting for read only?
   if filters.unread && household_has_unseen_comments
@@ -123,10 +141,9 @@ $("#households-table tbody tr[data-row-type='household']").each ->
   members.each ->
     $(this).removeClass("even")
     $(this).removeClass("odd")
-
   if passesFirstFilters && passesSecondFilters
-    stripeClass = if visibleRowCounter % 2 is 0 then "even" else "odd"
-    unStripeClass = if visibleRowCounter % 2 is 0 then "odd" else "even"
+    stripeClass = if window.visibleRowCounter % 2 is 0 then "even" else "odd"
+    unStripeClass = if window.visibleRowCounter % 2 is 0 then "odd" else "even"
 
     household.addClass("filter-show " + stripeClass)
     household.removeClass("filter-hide")
@@ -135,43 +152,63 @@ $("#households-table tbody tr[data-row-type='household']").each ->
       $(this).addClass("filter-show " + stripeClass)
       $(this).removeClass("filter-hide")
 
-    visibleRowCounter += 1
   else
     household.removeClass("filter-show")
     household.addClass("filter-hide")
     members.each ->
       $(this).removeClass("filter-show")
       $(this).addClass("filter-hide")
-#end each household
 
-if visibleRowCounter == 0
-  $('#empty-table').show()
-else
-  $('#empty-table').hide()
+window.filterTable = ->
 
+  #get filters
+  window.filters = JSON.parse($('#filters').html())
 
-#Update filters UI
-if filters.known
-  knownString = "<i class='fa fa-check-square-o fa-lg'></i> "
-else
-  knownString = "<i class='fa fa-square-o fa-lg'></i> "
+  #go through each household and check to see if it fails any filter
+  window.visibleRowCounter = 0 #for striping table
+  window.knownCount = 0
+  window.unknownCount = 0
+  window.unreadCount = 0
 
-if filters.unknown
-  unknownString = "<i class='fa fa-check-square-o fa-lg'></i> "
-else
-  unknownString = "<i class='fa fa-square-o fa-lg'></i> "
-
-if filters.unread
-  unreadString = "<i class='fa fa-check-square-o fa-lg'></i> "
-else
-  unreadString = "<i class='fa fa-square-o fa-lg'></i> "
+  $("#households-table tbody tr[data-row-type='household']").each ->
+    household = $(this)
+    filterHousehold(household)
 
 
+  if window.visibleRowCounter == 0
+    $('#empty-table').show()
+  else
+    $('#empty-table').hide()
 
-$('#known-anchor').empty().append( knownString + String(knownCount) + " Known")
-$('#unknown-anchor').empty().append( unknownString + String(unknownCount) + " Unknown")
-$('#unread-anchor').empty().append( unreadString + String(unreadCount) + " Unread")
+  #Update filters UI
+  if filters.known
+    knownString = "<i class='fa fa-check-square-o fa-lg'></i> "
+  else
+    knownString = "<i class='fa fa-square-o fa-lg'></i> "
 
-$('#tags-filter-dropdown').replaceWith("<%= escape_javascript( render partial: 'tags_filter_dropdown') %>")
+  if filters.unknown
+    unknownString = "<i class='fa fa-check-square-o fa-lg'></i> "
+  else
+    unknownString = "<i class='fa fa-square-o fa-lg'></i> "
 
-$('#organization-filter-dropdown').replaceWith("<%= escape_javascript( render partial: 'organization_filter_dropdown') %>")
+  if filters.unread
+    unreadString = "<i class='fa fa-check-square-o fa-lg'></i> "
+  else
+    unreadString = "<i class='fa fa-square-o fa-lg'></i> "
+
+  $('#known-filter').html(knownString + String(window.knownCount) + " Known")
+  $('#unknown-filter').html(unknownString + String(window.unknownCount) + " Unknown")
+  $('#unread-filter').html(unreadString + String(window.unreadCount) + " Unread")
+
+  #Update dropdowns
+  switch filters.update_category
+    when 'tags'
+      if (filters.tags.indexOf(filters.update_value) > -1)
+        checkString = "<i class='fa fa-check-square-o fa-2x'></i>"
+      else
+        checkString = "<i class='fa fa-square-o fa-2x'></i>"
+      idString = "#tag-" + String(filters.update_id) + '-filter'
+      $(idString).html(checkString)
+
+    when 'organization'
+      $('#organization-filter-dropdown').replaceWith("<%= escape_javascript( render partial: 'organization_filter_dropdown') %>")

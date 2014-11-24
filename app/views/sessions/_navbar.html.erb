@@ -13,34 +13,28 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <!-- Known -->
-        <li class="active"
-            id="known-button"
-          >
-          <a data-method="patch"
-             data-remote="true"
-             id = "known-anchor"
-             rel="nofollow"
-             href="/update_filters?type=known"><i class='fa fa-square-o fa-lg'></i> Known</a>
+        <li class="active">
+          <span onClick="window.updateFilters('known','toggle',null);"
+                style="cursor: pointer;"
+                id='known-filter'>
+            <i class='fa fa-square-o fa-lg'></i> Known
+          </span>
         </li>
         <!-- Unknown -->
-        <li class= "active"
-            id="unknown-button"
-          >
-          <a data-method="patch"
-             data-remote="true"
-             id = "unknown-anchor"
-             rel="nofollow"
-             href="/update_filters?type=unknown"><i class='fa fa-square-o fa-lg'></i> Unknown</a>
+        <li class= "active">
+          <span onClick="window.updateFilters('unknown','toggle',null);"
+                style="cursor: pointer;"
+                id='unknown-filter'>
+            <i class='fa fa-square-o fa-lg'></i> Unknown
+          </span>
         </li>
         <!-- Unread -->
-        <li class= "active"
-            id="unread-button"
-          >
-          <a data-method="patch"
-             data-remote="true"
-             id = "unread-anchor"
-             rel="nofollow"
-             href="/update_filters?type=unread"><i class='fa fa-square-o fa-lg'></i> Unread</a>
+        <li class= "active">
+          <span onClick="window.updateFilters('unread','toggle',null);"
+                style="cursor: pointer;"
+                id='unread-filter'>
+            <i class='fa fa-square-o fa-lg'></i> Unread
+          </span>
         </li>
         <!-- Tags Dropdown -->
         <li class="dropdown">
