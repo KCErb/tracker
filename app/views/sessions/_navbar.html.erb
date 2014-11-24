@@ -10,9 +10,9 @@
       </button>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <!-- Known -->
         <li class="active"
             id="known-button"
           >
@@ -22,6 +22,7 @@
              rel="nofollow"
              href="/update_filters?type=known"><i class='fa fa-square-o fa-lg'></i> Known</a>
         </li>
+        <!-- Unknown -->
         <li class= "active"
             id="unknown-button"
           >
@@ -31,6 +32,7 @@
              rel="nofollow"
              href="/update_filters?type=unknown"><i class='fa fa-square-o fa-lg'></i> Unknown</a>
         </li>
+        <!-- Unread -->
         <li class= "active"
             id="unread-button"
           >
@@ -40,15 +42,19 @@
              rel="nofollow"
              href="/update_filters?type=unread"><i class='fa fa-square-o fa-lg'></i> Unread</a>
         </li>
+        <!-- Tags Dropdown -->
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tags <span class="caret"></span></a>
             <%= render partial: "users/tags_filter_dropdown" %>
         </li>
+        <!-- Organization Dropdown -->
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organization <span class="caret"></span></a>
             <%= render partial: "users/organization_filter_dropdown" %>
         </li>
       </ul>
+
+      <!-- Search Bar -->
       <form accept-charset="UTF-8"
             action="/update_filters?type=search"
             method="post"
