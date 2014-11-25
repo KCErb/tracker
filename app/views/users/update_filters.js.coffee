@@ -242,7 +242,7 @@ window.filterTable = ->
     when 'organization'
       updateOrganizations()
 
-  $("#updating-table-modal").modal('hide')
+  #$("#updating-table-modal").modal('hide')
 
 #END FUNCTIONS
 
