@@ -1,5 +1,6 @@
 # UPDATE FILTERS
 window.updateFilters = (source, value, id) ->
+  $("#updating-table-modal").modal({show: true, backdrop: 'static'})
   filters = JSON.parse($('#filters').html())
   filters.update_category = source
   filters.update_value = value
@@ -240,6 +241,10 @@ window.filterTable = ->
       updateTags()
     when 'organization'
       updateOrganizations()
+
+  $("#updating-table-modal").modal('hide')
+
+#END FUNCTIONS
 
 #call filter table when this script is run for the first time to put counts in navbar
 window.filterTable()
