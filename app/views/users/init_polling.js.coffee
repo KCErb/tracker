@@ -1,8 +1,7 @@
 #Custom setTimeout function to look nicer in coffee
-
-delay = (ms, func) -> setTimeout func, ms
+window.delay = (ms, func) -> window.timer = setTimeout func, ms
 poll = ->
-  delay 500, ->
+  window.delay 500, ->
     $.ajax
       url: "/check_status"
       success: (data) ->

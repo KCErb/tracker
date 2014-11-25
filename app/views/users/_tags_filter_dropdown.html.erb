@@ -1,15 +1,17 @@
 <ul id="tags-filter-dropdown" class="dropdown-menu" role="menu">
   <!-- LIST PUBLIC TAGS -->
+  <!-- Note that same onClick for two spans is for convenience on the javascript end -->
 <% Tag.where("organization = ? OR organization = ?", "All", "Internal").each do |tag| %>
   <li>
-    <span onClick="window.updateFilters('tags','<%= tag.body %>',<%= tag.id %>);"
-          style="cursor: pointer;"
-          id='tag-<%= tag.id %>-filter'>
+    <a onClick="window.updateFilters('tags','<%= tag.body %>',<%= tag.id %>);"
+       style="cursor: pointer;">
+    <span id='tag-<%= tag.id %>-filter'>
       <i class='fa fa-square-o fa-2x'></i>
     </span>
     <span class='label-tag-filter label label-<%= tag.color %>'>
       <%= tag.body %>
     </span>
+    </a>
   </li>
 <% end %>
 <% if Tag.where(organization: current_user.organization).count > 0 %>
@@ -21,15 +23,16 @@
   <li>
     <table>
       <tr id="custom-tag-<%= tag.id %>">
-        <td class='tag-td'>
-          <span onClick="window.updateFilters('tags','<%= tag.body %>,<%= tag.id %>);"
-                style="cursor: pointer;"
-                id='tag-<%= tag.id %>-filter'>
+        <td class='tag-td gray-hover'>
+          <a onClick="window.updateFilters('tags','<%= tag.body %>', <%= tag.id %>);"
+             style="cursor: pointer;">
+          <span id='tag-<%= tag.id %>-filter'>
               <i class='fa fa-square-o fa-2x'></i>
           </span>
           <span class='label-tag-filter label label-<%= tag.color %>' >
             <%= tag.body %>
           </span>
+          </a>
         </td>
         <td class='edit-tag-td'>
           <%= link_to edit_tags_dialog_path(id: tag.id), remote: true  do %>

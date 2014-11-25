@@ -4,6 +4,7 @@ window.updateFilters = (source, value, id) ->
   filters.update_category = source
   filters.update_value = value
   filters.update_id = id
+
   switch source
     when 'known'
       if filters.known then filters.known = false else filters.known = true
@@ -22,12 +23,20 @@ window.updateFilters = (source, value, id) ->
         filters.organization = ''
       else
         filters.organization = value
+    when 'search'
+      searchText = $('#search-filter').val()
+      filters.search = searchText
 
   #hold off on search support for the moment
 
   filtersString = JSON.stringify(filters);
   $('#filters').html(filtersString)
   window.filterTable()
+
+window.delaySearch = ->
+  clearTimeout window.timer if window.timer?
+  window.delay 500, ->
+    window.updateFilters('search', '', null)
 
 # FUNCTION DEFINITIONS
 tagsHousehold = (household, tagsArr) ->
@@ -72,6 +81,31 @@ organizationMembers = (members) ->
       belongs_to_organization = true if (organizations.indexOf(filters.organization) > -1)
 
   belongs_to_organization
+
+updateTags = ->
+  if (filters.tags.indexOf(filters.update_value) > -1)
+    checkString = "<i class='fa fa-check-square-o fa-2x'></i>"
+  else
+    checkString = "<i class='fa fa-square-o fa-2x'></i>"
+
+  idString = "#tag-" + String(filters.update_id) + '-filter'
+  $(idString).html(checkString)
+
+updateOrganizations = ->
+  for i in [1..8] by 1
+    if filters.update_id == i
+      checkString = toggleOrganization
+    else
+      checkString = "<i class='fa fa-square-o fa-2x'></i>"
+
+    idString = "#organization-" + String(i) + '-filter'
+    $(idString).html(checkString)
+
+toggleOrganization = ->
+  if filters.organization == filters.update_value
+    checkString = "<i class='fa fa-check-square-o fa-2x'></i>"
+  else
+    checkString = "<i class='fa fa-square-o fa-2x'></i>"
 
 filterHousehold = (household) ->
   householdId = household.data('id')
@@ -152,6 +186,7 @@ filterHousehold = (household) ->
       $(this).addClass("filter-show " + stripeClass)
       $(this).removeClass("filter-hide")
 
+    window.visibleRowCounter += 1
   else
     household.removeClass("filter-show")
     household.addClass("filter-hide")
@@ -160,7 +195,6 @@ filterHousehold = (household) ->
       $(this).addClass("filter-hide")
 
 window.filterTable = ->
-
   #get filters
   window.filters = JSON.parse($('#filters').html())
 
@@ -203,12 +237,9 @@ window.filterTable = ->
   #Update dropdowns
   switch filters.update_category
     when 'tags'
-      if (filters.tags.indexOf(filters.update_value) > -1)
-        checkString = "<i class='fa fa-check-square-o fa-2x'></i>"
-      else
-        checkString = "<i class='fa fa-square-o fa-2x'></i>"
-      idString = "#tag-" + String(filters.update_id) + '-filter'
-      $(idString).html(checkString)
-
+      updateTags()
     when 'organization'
-      $('#organization-filter-dropdown').replaceWith("<%= escape_javascript( render partial: 'organization_filter_dropdown') %>")
+      updateOrganizations()
+
+#call filter table when this script is run for the first time to put counts in navbar
+window.filterTable()
