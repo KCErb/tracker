@@ -205,10 +205,13 @@ window.filterTable = ->
   window.unknownCount = 0
   window.unreadCount = 0
 
+  start_time = $.now()
   $("#households-table tbody tr[data-row-type='household']").each ->
     household = $(this)
     filterHousehold(household)
-
+  end_time = $.now()
+  time_diff = end_time - start_time
+  console.log time_diff
   if window.visibleRowCounter == 0
     $('#empty-table').show()
   else
