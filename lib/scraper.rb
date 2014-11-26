@@ -553,8 +553,10 @@ class Scraper
         </td>
         </tr>
       )
-      @user.table_progress += 1.0 / import_total * 100
-      @user.save
+      if true #index % 5 == 0
+        @user.table_progress += 1.0 / import_total * 100
+        @user.save
+      end
     end
 
     #make an empty anchor for non members to borrow and stick it in the member rows
@@ -713,8 +715,10 @@ class Scraper
 
         end #reverse household members
       end #if household members exist
-      @user.table_progress += 1.0 / import_total * 100
-      @user.save
+      if true #index % 5 == 0
+        @user.table_progress += 1.0 / import_total * 100
+        @user.save
+      end
     end #households.each
     @user.progress_message = 'Done!'
     @user.save

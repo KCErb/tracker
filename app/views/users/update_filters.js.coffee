@@ -1,6 +1,6 @@
 # UPDATE FILTERS
 window.updateFilters = (source, value, id) ->
-  $("#updating-table-modal").modal({show: true, backdrop: 'static'})
+  #callback to updateTable on shown modal
   filters = JSON.parse($('#filters').html())
   filters.update_category = source
   filters.update_value = value
@@ -29,10 +29,10 @@ window.updateFilters = (source, value, id) ->
       filters.search = searchText
 
   #hold off on search support for the moment
-
   filtersString = JSON.stringify(filters);
   $('#filters').html(filtersString)
-  window.filterTable()
+  $("#updating-table-modal").modal('show')
+  $("#updating-table-modal").modal('hide')
 
 window.delaySearch = ->
   clearTimeout window.timer if window.timer?
@@ -209,7 +209,6 @@ window.filterTable = ->
     household = $(this)
     filterHousehold(household)
 
-
   if window.visibleRowCounter == 0
     $('#empty-table').show()
   else
@@ -242,9 +241,10 @@ window.filterTable = ->
     when 'organization'
       updateOrganizations()
 
-  #$("#updating-table-modal").modal('hide')
-
 #END FUNCTIONS
 
 #call filter table when this script is run for the first time to put counts in navbar
 window.filterTable()
+#register modal close callback
+$("#updating-table-modal").on 'show.bs.modal', ->
+  window.filterTable()

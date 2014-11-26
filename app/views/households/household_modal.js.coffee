@@ -28,7 +28,7 @@ else
 
 
 $("#private-explanation").popover();
-$("#shared-modal").modal({show: true, backdrop: 'static'})
+$("#shared-modal").modal('show')
 
 #Mark household as seen (remove unseen)
 household = $("#households-table tbody tr[data-row-type='household'][data-id='<%= @household.lds_id %>'] td.unseen")
