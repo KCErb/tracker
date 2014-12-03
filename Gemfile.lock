@@ -52,6 +52,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.2.1)
+    fastclick-rails (1.0.1)
     fastercsv (1.5.5)
     font-awesome-rails (4.2.0.0)
       railties (>= 3.2, < 5.0)
@@ -180,6 +181,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   brakeman
   coffee-rails (~> 4.0.0)
+  fastclick-rails
   font-awesome-rails
   jbuilder (~> 2.0)
   jquery-rails

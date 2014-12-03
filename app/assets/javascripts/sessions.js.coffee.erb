@@ -1,4 +1,5 @@
 initializeTable = ->
+  new FastClick(document.body)
   $.get "/init_table"
   $.get "/init_polling"
 

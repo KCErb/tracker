@@ -2,7 +2,7 @@
   <!-- LIST PUBLIC TAGS -->
   <!-- Note that same onClick for two spans is for convenience on the javascript end -->
 <% Tag.where("organization = ? OR organization = ?", "All", "Internal").each do |tag| %>
-  <li>
+  <li id='tag-<%= tag.id %>-filter-li'>
     <a onClick="window.updateFilters('tags','<%= tag.body %>',<%= tag.id %>);"
        style="cursor: pointer;">
     <span id='tag-<%= tag.id %>-filter'>
@@ -20,7 +20,7 @@
 <!-- LIST USER TAGS -->
 
 <% Tag.where(organization: current_user.organization).each do |tag| %>
-  <li>
+  <li id='tag-<%= tag.id %>-filter-li'>
     <table>
       <tr id="custom-tag-<%= tag.id %>">
         <td class='tag-td gray-hover'>

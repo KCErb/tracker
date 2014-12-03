@@ -59,3 +59,6 @@ gem 'font-awesome-rails'
 
 # New Relic to solve Memory Leak
 gem 'newrelic_rpm'
+
+#fast click
+gem 'fastclick-rails'

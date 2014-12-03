@@ -16,4 +16,5 @@
 //= require bootstrap.min
 //= require turbolinks
 //= require jquery-readyselector
+//= require fastclick
 //= require_tree .

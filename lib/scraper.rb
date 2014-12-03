@@ -535,7 +535,8 @@ class Scraper
       end
 
       @members_html[lds_id] = %Q(
-        <tr data-id='#{lds_id}'
+        <tr id='needs_head_of_household-needs_index'
+        data-id='#{lds_id}'
         data-row-type='member'
         data-head='needs_head_of_household'
         data-organization='#{row_organizations}'
@@ -561,7 +562,8 @@ class Scraper
 
     #make an empty anchor for non members to borrow and stick it in the member rows
     @members_html['non-member-template'] = %Q(
-      <tr data-row-type='member'
+      <tr id='needs_head_of_household-needs_index'
+      data-row-type='member'
       data-head='needs_head_of_household'
       class='needs_odd_or_even known_or_unknown caret-hide' >
       <td class='household-caret'></td>
@@ -642,7 +644,11 @@ class Scraper
       end
 
       #create row
-      @table_body += %Q( <tr data-row-type='household' data-id='#{lds_id}' class='#{row_class} #{household.known? ? "known" : "unknown"}' )
+      @table_body += %Q(
+        <tr data-row-type='household'
+            data-id='#{lds_id}'
+            data-member-count='#{household.members.count}'
+            class="#{row_class} #{household.known? ? 'known' : 'unknown'}")
 
       #add caret if multi-member house, add data-age if not
       if household.members.count > 1
@@ -699,13 +705,14 @@ class Scraper
       )
       # ADD MEMBER ROWS IF APPLICABLE
       if household.members.count > 1
-        household.members.reverse_each do |member|
+        household.members.reverse_each.with_index do |member, member_index|
           member_id = member.lds_id
           if member_id.include? 'NM'
-            add_non_member(member, row_class)
+            add_non_member(member, row_class, member_index.to_s)
           else #not a non member
             next if @members_html[member_id] == nil #this shouldn't get called, but it does in tests since households are not in sync with member lists
-            html = @members_html[member_id].sub('needs_head_of_household',lds_id)
+            html = @members_html[member_id].gsub('needs_head_of_household',lds_id)
+            html.sub!('needs_index', member_index.to_s)
             html.sub!('needs_odd_or_even', row_class)
             known_or_unknown = household.known? ? "known" : "unknown"
             html.sub!('known_or_unknown', known_or_unknown)
@@ -753,7 +760,7 @@ class Scraper
     end
   end
 
-  def add_non_member(member, row_class)
+  def add_non_member(member, row_class, member_index)
     non_member = member
     household = member.household
     head_lds_id = household.lds_id
@@ -776,7 +783,8 @@ class Scraper
 
     #Sub Template Row Info
     html = @members_html['non-member-template'].clone
-    html.sub!('needs_head_of_household',head_lds_id)
+    html.gsub!('needs_head_of_household',head_lds_id)
+    html.gsub!('needs_index', member_index)
     html.sub!('needs_odd_or_even', row_class)
     known_or_unknown = household.known? ? "known" : "unknown"
     html.sub!('known_or_unknown', known_or_unknown)
