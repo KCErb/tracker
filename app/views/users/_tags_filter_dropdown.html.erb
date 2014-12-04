@@ -4,7 +4,8 @@
 <% Tag.where("organization = ? OR organization = ?", "All", "Internal").each do |tag| %>
   <li id='tag-<%= tag.id %>-filter-li'>
     <a onClick="window.updateFilters('tags','<%= tag.body %>',<%= tag.id %>);"
-       style="cursor: pointer;">
+       style="cursor: pointer;"
+       class='no-bootstrap'>
     <span id='tag-<%= tag.id %>-filter'>
       <i class='fa fa-square-o fa-2x'></i>
     </span>
@@ -25,7 +26,8 @@
       <tr id="custom-tag-<%= tag.id %>">
         <td class='tag-td gray-hover'>
           <a onClick="window.updateFilters('tags','<%= tag.body %>', <%= tag.id %>);"
-             style="cursor: pointer;">
+             style="cursor: pointer;"
+             class='no-bootstrap'>
           <span id='tag-<%= tag.id %>-filter'>
               <i class='fa fa-square-o fa-2x'></i>
           </span>
@@ -54,10 +56,9 @@
  <!-- CREATE -->
    <li>
     <a data-remote="true"
-       rel="nofollow"
        href="/create_tags_dialog">
-        <i style="margin-left:3px;" class='fa fa-plus fa-lg'></i>
-        <span style="margin-left:8px;">Create Tag</span>
-    </a>
-  </li>
+       <i style="margin-left:3px;" class='fa fa-plus fa-lg'></i>
+       <span style="margin-left:8px;">Create Tag</span>
+     </a>
+   </li>
 </ul>

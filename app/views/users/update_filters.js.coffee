@@ -275,10 +275,3 @@ window.filterTable = ->
 
 #call filter table when this script is run for the first time to put counts in navbar
 window.filterTable()
-
-
-$('#tags-filter-dropdown').click (e) ->
-  e.stopPropagation()
-
-$('#organization-filter-dropdown').click (e) ->
-  e.stopPropagation()

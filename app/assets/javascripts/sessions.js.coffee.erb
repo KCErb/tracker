@@ -1,5 +1,14 @@
 initializeTable = ->
   new FastClick(document.body)
+
+  #Simultaneously prevent dropdown from closing
+  #on click and open up modal
+  $(".no-bootstrap").click (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    $(e.target).trigger "click.rails"
+
+
   $.get "/init_table"
   $.get "/init_polling"
 
