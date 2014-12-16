@@ -4,10 +4,13 @@
 <% ["Elders Quorum", "High Priests Group", "Relief Society", "Single Adult",
 "Young Single Adult", "Young Men", "Young Women", "Primary"].each do |organization| %>
   <% id += 1 %>
-  <li id='organization-<%= id %>-filter-li'>
-    <a onClick="window.updateFilters('organization','<%= organization %>',<%= id %>);"
-       style="cursor: pointer;"
-       class='no-bootstrap'>
+  <li class='filter-updater no-bootstrap'
+      data-source='organization'
+      data-value='<%= organization %>'
+      data-id='<%= id %>'
+      style="cursor: pointer;"
+      id='organization-<%= id %>-filter-li'>
+    <a>
     <span id='organization-<%= id %>-filter'>
       <i class='fa fa-square-o fa-2x'></i>
     </span>

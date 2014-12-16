@@ -63,25 +63,11 @@ body {
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:active,
 .navbar-default .navbar-toggle:focus {
-  background-color: #5c7a99;
+  background-color: rgba(197, 197, 197, 0.55);
+  color: #fff;
 }
 
-@media (max-width: 767px) {
 
-  .navbar-default .navbar-nav > li.active {
-    background-color: #5c7a99;
-  }
-
-  .navbar-default .navbar-nav > .active > a,
-  .navbar-default .navbar-nav > .active > a:hover,
-  .navbar-default .navbar-nav > .active > a:active,
-  .navbar-default .navbar-nav > .active > a:focus {
-    color: #fff;
-    background-color: #5c7a99;
-  }
-}
-
-@media (min-width: 768px) {
 
   .navbar-default .navbar-nav > li.active {
     background-color: transparent;
@@ -94,7 +80,7 @@ body {
     color: #000;
     background-color: transparent;
   }
-}
+
 
 /*
 .navbar-default .navbar-nav > a:hover,
@@ -161,6 +147,7 @@ body {
   white-space: nowrap;
 }
 
+/*
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #000;
@@ -186,17 +173,15 @@ body {
     background-color: #5c7a99;
   }
 }
-
-@media (min-width: 768px) {
-  .dropdown-menu > .active > a,
-  .dropdown-menu > .active > a:hover,
-  .dropdown-menu > .active > a:active,
-  .dropdown-menu > .active > a:focus {
-    color: #000;
-    text-decoration: none;
-    background-color: transparent;
-  }
-
+*/
+/*Marked important to overwride bootstrap small size*/
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:active,
+.dropdown-menu > .active > a:focus {
+  color: #000 !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
 }
 
 .label-blue {
@@ -552,4 +537,14 @@ footer {
   width: 100%;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+
+.updating-message {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+  visibility: hidden;
 }

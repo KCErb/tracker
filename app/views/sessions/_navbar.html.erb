@@ -13,30 +13,37 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <!-- Known -->
-        <li id='known-filter-li'>
-          <a>
-          <span onClick="window.updateFilters('known','toggle',null);"
-                style="cursor: pointer;"
-                id='known-filter'>
+        <li class='filter-updater'
+            data-source='known'
+            data-value='toggle'
+            data-id='null'
+            style="cursor: pointer;"
+            id='known-filter-li'>
+          <a id='known-filter'>
             <i class='fa fa-square-o fa-lg'></i> Known
-          </span>
           </a>
         </li>
         <!-- Unknown -->
-        <li id='unknown-filter-li'>
+        <li class='filter-updater'
+            data-source='unknown'
+            data-value='toggle'
+            data-id='null'
+            id='unknown-filter-li'>
           <a>
-          <span onClick="window.updateFilters('unknown','toggle',null);"
-                style="cursor: pointer;"
+          <span style="cursor: pointer;"
                 id='unknown-filter'>
             <i class='fa fa-square-o fa-lg'></i> Unknown
           </span>
          </a>
         </li>
         <!-- Unread -->
-        <li id='unread-filter-li'>
+        <li class='filter-updater'
+            data-source='unread'
+            data-value='toggle'
+            data-id='null'
+            id='unread-filter-li'>
           <a>
-          <span onClick="window.updateFilters('unread','toggle',null);"
-                style="cursor: pointer;"
+          <span style="cursor: pointer;"
                 id='unread-filter'>
             <i class='fa fa-square-o fa-lg'></i> Unread
           </span>
@@ -56,14 +63,17 @@
 
       <!-- Search Bar -->
       <form class="navbar-form navbar-right"
+            id="search-bar-form"
             role="search">
         <div class="form-group">
           <input name="search_text"
                  type="text"
                  class="form-control"
                  placeholder="Search"
-                 id="search-filter"
-                 onKeyup="window.delaySearch();">
+                 data-source='search'
+                 data-value=''
+                 data-id='null'
+                 id="search-filter">
         </div>
       </form>
     </div><!-- /.navbar-collapse -->

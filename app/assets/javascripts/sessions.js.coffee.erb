@@ -8,6 +8,18 @@ initializeTable = ->
     e.preventDefault()
     $(e.target).trigger "click.rails"
 
+  $('.filter-updater').click ->
+    window.updateFilters(this)
+
+  $('#search-filter').keyup ->
+    window.delaySearch(this)
+
+  #don't "submit" the form on enter key
+  $('#search-bar-form').on "keyup keypress", (e) ->
+    code = e.keyCode || e.which;
+    if code  == 13
+      e.preventDefault()
+      false
 
   $.get "/init_table"
   $.get "/init_polling"

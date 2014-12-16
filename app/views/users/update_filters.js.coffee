@@ -1,49 +1,88 @@
 # UPDATE FILTERS
-window.updateFilters = (source, value, id) ->
-  #callback to updateTable on shown modal
-  filters = JSON.parse($('#filters').html())
-  filters.update_category = source
-  filters.update_value = value
-  filters.update_id = id
+window.updateFilters = (element) ->
 
-  switch source
-    when 'known'
-      if filters.known then filters.known = false else filters.known = true
-    when 'unknown'
-      if filters.unknown then filters.unknown = false else filters.unknown = true
-    when 'unread'
-      if filters.unread then filters.unread = false else filters.unread = true
-    when 'tags'
-      index = filters.tags.indexOf(value);
-      if index > -1
-        filters.tags.splice(index,1)
-      else
-        filters.tags.push(value)
-    when 'organization'
-      if filters.organization == value
-        filters.organization = ''
-      else
-        filters.organization = value
-    when 'search'
-      searchText = $('#search-filter').val()
-      filters.search = searchText
 
-  #hold off on search support for the moment
-  filtersString = JSON.stringify(filters);
-  $('#filters').html(filtersString)
-  #Update dropdowns right now!
+  $("#updating-table").css('visibility','visible')
+
+  window.delay 0, ->
+    source = $(element).data("source")
+    value = $(element).data("value")
+    id = $(element).data("id")
+
+    #callback to updateTable on shown modal
+    filters = JSON.parse($('#filters').html())
+    filters.update_category = source
+    filters.update_value = value
+    filters.update_id = id
+
+    switch source
+      when 'known'
+        if filters.known then filters.known = false else filters.known = true
+      when 'unknown'
+        if filters.unknown then filters.unknown = false else filters.unknown = true
+      when 'unread'
+        if filters.unread then filters.unread = false else filters.unread = true
+      when 'tags'
+        index = filters.tags.indexOf(value);
+        if index > -1
+          filters.tags.splice(index,1)
+        else
+          filters.tags.push(value)
+      when 'organization'
+        if filters.organization == value
+          filters.organization = ''
+        else
+          filters.organization = value
+      when 'search'
+        searchText = $('#search-filter').val()
+        filters.search = searchText
+
+    filtersString = JSON.stringify(filters);
+    $('#filters').html(filtersString)
+
+    window.filterTable()
+
+    $("#updating-table").css('visibility','hidden')
+
+
+window.updateFiltersUI = ->
+  #Update UI first
   filters = JSON.parse($('#filters').html())
   switch filters.update_category
     when 'tags'
       updateTags(filters)
     when 'organization'
       updateOrganizations(filters)
-  window.filterTable()
+  #Update filters UI
+  if filters.known
+    knownString = "<i class='fa fa-check-square-o fa-lg'></i> "
+    $('#known-filter-li').addClass('active')
+  else
+    knownString = "<i class='fa fa-square-o fa-lg'></i> "
+    $('#known-filter-li').removeClass('active')
 
-window.delaySearch = ->
+  if filters.unknown
+    unknownString = "<i class='fa fa-check-square-o fa-lg'></i> "
+    $('#unknown-filter-li').addClass('active')
+  else
+    unknownString = "<i class='fa fa-square-o fa-lg'></i> "
+    $('#unknown-filter-li').removeClass('active')
+
+  if filters.unread
+    unreadString = "<i class='fa fa-check-square-o fa-lg'></i> "
+    $('#unread-filter-li').addClass('active')
+  else
+    unreadString = "<i class='fa fa-square-o fa-lg'></i> "
+    $('#unread-filter-li').removeClass('active')
+
+  $('#known-filter').html(knownString + String(window.knownCount) + " Known")
+  $('#unknown-filter').html(unknownString + String(window.unknownCount) + " Unknown")
+  $('#unread-filter').html(unreadString + String(window.unreadCount) + " Unread")
+
+window.delaySearch = (element) ->
   clearTimeout window.timer if window.timer?
   window.delay 500, ->
-    window.updateFilters('search', '', null)
+    window.updateFilters(element)
 
 # FUNCTION DEFINITIONS
 tagsHousehold = (household, tagsArr) ->
@@ -224,6 +263,8 @@ filterHousehold = (household) ->
         $(this).addClass("filter-hide")
 
 window.filterTable = ->
+  console.log "filterTable called"
+  time1 = performance.now()
   #get filters
   window.filters = JSON.parse($('#filters').html())
 
@@ -246,31 +287,8 @@ window.filterTable = ->
   else
     $('#empty-table').hide()
 
-  #Update filters UI
-  if filters.known
-    knownString = "<i class='fa fa-check-square-o fa-lg'></i> "
-    $('#known-filter-li').addClass('active')
-  else
-    knownString = "<i class='fa fa-square-o fa-lg'></i> "
-    $('#known-filter-li').removeClass('active')
+  window.updateFiltersUI()
 
-  if filters.unknown
-    unknownString = "<i class='fa fa-check-square-o fa-lg'></i> "
-    $('#unknown-filter-li').addClass('active')
-  else
-    unknownString = "<i class='fa fa-square-o fa-lg'></i> "
-    $('#unknown-filter-li').removeClass('active')
-
-  if filters.unread
-    unreadString = "<i class='fa fa-check-square-o fa-lg'></i> "
-    $('#unread-filter-li').addClass('active')
-  else
-    unreadString = "<i class='fa fa-square-o fa-lg'></i> "
-    $('#unread-filter-li').removeClass('active')
-
-  $('#known-filter').html(knownString + String(window.knownCount) + " Known")
-  $('#unknown-filter').html(unknownString + String(window.unknownCount) + " Unknown")
-  $('#unread-filter').html(unreadString + String(window.unreadCount) + " Unread")
 #END FUNCTIONS
 
 #call filter table when this script is run for the first time to put counts in navbar

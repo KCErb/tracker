@@ -2,16 +2,19 @@
   <!-- LIST PUBLIC TAGS -->
   <!-- Note that same onClick for two spans is for convenience on the javascript end -->
 <% Tag.where("organization = ? OR organization = ?", "All", "Internal").each do |tag| %>
-  <li id='tag-<%= tag.id %>-filter-li'>
-    <a onClick="window.updateFilters('tags','<%= tag.body %>',<%= tag.id %>);"
-       style="cursor: pointer;"
-       class='no-bootstrap'>
-    <span id='tag-<%= tag.id %>-filter'>
-      <i class='fa fa-square-o fa-2x'></i>
-    </span>
-    <span class='label-tag-filter label label-<%= tag.color %>'>
-      <%= tag.body %>
-    </span>
+  <li class='filter-updater no-bootstrap'
+      data-source='tags'
+      data-value='<%= tag.body %>'
+      data-id='<%= tag.id %>'
+      style="cursor: pointer;"
+      id='tag-<%= tag.id %>-filter-li'>
+    <a>
+      <span id='tag-<%= tag.id %>-filter'>
+        <i class='fa fa-square-o fa-2x'></i>
+      </span>
+      <span class='label-tag-filter label label-<%= tag.color %>'>
+        <%= tag.body %>
+      </span>
     </a>
   </li>
 <% end %>
@@ -21,13 +24,16 @@
 <!-- LIST USER TAGS -->
 
 <% Tag.where(organization: current_user.organization).each do |tag| %>
-  <li id='tag-<%= tag.id %>-filter-li'>
+  <li class='filter-updater no-bootstrap'
+      data-source='tags'
+      data-value='<%= tag.body %>'
+      data-id='<%= tag.id %>'
+      style="cursor: pointer;"
+      id='tag-<%= tag.id %>-filter-li'>
     <table>
       <tr id="custom-tag-<%= tag.id %>">
         <td class='tag-td gray-hover'>
-          <a onClick="window.updateFilters('tags','<%= tag.body %>', <%= tag.id %>);"
-             style="cursor: pointer;"
-             class='no-bootstrap'>
+          <a>
           <span id='tag-<%= tag.id %>-filter'>
               <i class='fa fa-square-o fa-2x'></i>
           </span>

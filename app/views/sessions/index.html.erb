@@ -4,19 +4,6 @@
 <div id="create-tag-modal">
 </div>
 
-<div class="modal" id="updating-table-modal" tabindex="-1" role="dialog" aria-labelledby="modal-header" aria-hidden="true"
-      data-background="static">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-body">
-        <h4 class='text-center'>
-          Updating . . .
-        </h4>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script type="application/json" id="filters">
     {
         "known": false,
@@ -31,7 +18,16 @@
     }
 </script>
 
+<div class='updating-message'>
+  <div class="alert alert-warning alert-dismissible" role="alert" id="updating-table" >
+    Updating . . .
+  </div>
+</div>
+
 <div class="container">
+
+  <!--style=-->
+
   <h2 class="page-title">Tracker</h2>
   <%= render partial: "navbar" %>
   <div id="households-table-div">
