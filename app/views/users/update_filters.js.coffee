@@ -85,17 +85,22 @@ window.delaySearch = (element) ->
     window.updateFilters(element)
 
 # FUNCTION DEFINITIONS
+containsTag = (does_this, contain_this) ->
+  searchString = ">" + contain_this + "<"
+  result = does_this.search(searchString) > -1
+  result
+
 tagsHousehold = (household, tagsArr) ->
   household_has_tag = false
   for tag_body in tagsArr
-    household_has_tag = true if (household.html().search(tag_body) > -1)
+    household_has_tag = true if containsTag(household.html(), tag_body)
   household_has_tag
 
 tagsMembers = (members, tagsArr) ->
   any_have_tags = false
   members.each ->
     for tag_body in tagsArr
-      any_have_tags = true if ($(this).html().search(tag_body) > -1)
+      any_have_tags = true if containsTag($(this).html(), tag_body)
       break
   any_have_tags
 
@@ -212,7 +217,8 @@ filterHousehold = (household) ->
 
   #selecting for read only?
   if filters.unread && household_has_unseen_comments
-    passing_filters = true
+    #I know this is redundant, but of the options, it makes the most sense.
+    passing_filters = true if passing_filters
   else
     passing_filters = false if filters.unread
 
@@ -263,7 +269,6 @@ filterHousehold = (household) ->
         $(this).addClass("filter-hide")
 
 window.filterTable = ->
-  console.log "filterTable called"
   time1 = performance.now()
   #get filters
   window.filters = JSON.parse($('#filters').html())
