@@ -1,8 +1,8 @@
 initializeTable = ->
   new FastClick(document.body)
 
-  #Simultaneously prevent dropdown from closing
-  #on click and open up modal
+  # Simultaneously prevent dropdown from closing
+  # on click and open up modal
   $(".no-bootstrap").click (e) ->
     e.stopPropagation()
     e.preventDefault()
@@ -14,7 +14,7 @@ initializeTable = ->
   $('#search-filter').keyup ->
     window.delaySearch(this)
 
-  #don't "submit" the form on enter key
+  # don't "submit" the form on enter key
   $('#search-bar-form').on "keyup keypress", (e) ->
     code = e.keyCode || e.which;
     if code  == 13

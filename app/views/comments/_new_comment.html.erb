@@ -29,9 +29,11 @@
     <%= hidden_field_tag "comment[commenter_calling]", current_user.calling %>
     <%= hidden_field_tag "comment[commenter_lds_id]", current_user.lds_id %>
     <%= f.text_area :body, class: "new-comment-box", placeholder: "Leave a comment" %>
+    <!-- This allows specific users to custom edit the date a comment was created.
     <% if current_user.lds_id == '5690149565' || current_user.lds_id == '2908502366' %>
       <%= f.date_select(:created_at) %>
     <% end %>
+    -->
     <div class="private-comment">
       <%= f.check_box :private %>
       Private

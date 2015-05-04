@@ -503,7 +503,7 @@ class Scraper
 
     @user.progress_message = 'Importing Members'
     @user.save
-
+    idx = 0
     @individuals_anchors.each do |lds_id, html_anchor|
       #attempt to retrieve or create member
       member = Member.find_by_lds_id(lds_id)
@@ -521,6 +521,7 @@ class Scraper
       html_anchor.sub! 'needs_organizations', row_organizations
 
       #TAGS
+      # build tag html for table row
       tags_html = ""
       member.tags.each do |tag|
         next if tag.organization != "All" &&
@@ -528,9 +529,10 @@ class Scraper
           tag.organization != @user.organization
         tag_history = TagHistory.where(member_id: member.id, tag_id: tag.id).first
         next unless tag_history.active?
-
-
-
+        if tag.body == 'New'
+          res = check_new_tag(member, tag_history)
+          next if res == :destroyed
+        end
         tags_html += "<span class='label label-#{tag.color}' >#{tag.body}</span>"
       end
 
@@ -640,6 +642,10 @@ class Scraper
           tag.organization != @user.organization
         tag_history = TagHistory.where(household_id: household.id, tag_id: tag.id).first
         next unless tag_history.active?
+        if tag.body == 'New'
+          res = check_new_tag(household, tag_history)
+          next if res == :destroyed
+        end
         tags_html += "<span class='label label-#{tag.color}' >#{tag.body}</span>"
       end
 
@@ -770,6 +776,15 @@ class Scraper
 
     tags_html = ""
     non_member.tags.each do |tag|
+      next if tag.organization != "All" &&
+        tag.organization != "Internal" &&
+        tag.organization != @user.organization
+      tag_history = TagHistory.where(member_id: non_member.id, tag_id: tag.id).first
+      next unless tag_history.active?
+      if tag.body == 'New'
+        res = check_new_tag(non_member, tag_history)
+        next if res == :destroyed
+      end
       tags_html += "<span class='label label-#{tag.color}' >#{tag.body}</span>"
     end
 
@@ -855,12 +870,25 @@ class Scraper
         moh.move_type = "born"
       end
       # at this point, we know that we can import but it's failing
-      # so we'll just set it to unknown
+      # so we'll just set it to unknown and set the date to 5 years ago!
       if moh.moved_in == nil
         moh.moved_in = Time.now - 60*60*24*365.25*5
         moh.move_type = "unknown"
       end
       moh.save
+    end
+  end
+
+  # check members and households that have a new tag to see if they're still new
+  # I did this badly thinking hey I'm gonna rewrite it soon anways right?
+  def check_new_tag(moh, tag_history)
+    # too old is 6 months old
+    too_old = (Date.today - moh.moved_in) > 365
+    if too_old
+      tag_history.destroy
+      :destroyed
+    else
+      :safe
     end
   end
 

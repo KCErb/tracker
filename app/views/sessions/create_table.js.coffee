@@ -2,7 +2,7 @@ $('#households-table-div').html("<%= escape_javascript( render partial: 'table',
 
 $.get "/update_table"
 
-#Handle click on member or household - generate and display modal
+# Handle click on member or household - generate and display modal
 $ ->
   $("a.modal-link").click (e) ->
     window.ldsId = $(this).data("id")
@@ -65,8 +65,6 @@ getHouseholdModal = (ldsId) ->
   $.get "/household_modal", lds_id: ldsId
   $.get "/household_address", lds_id: ldsId
   getHousehold(ldsId)
-
-
 
 getMember = (ldsId) ->
   $.get "/members/", lds_id: ldsId, getId, 'json'

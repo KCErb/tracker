@@ -9,7 +9,7 @@ window.updateFilters = (element) ->
     value = $(element).data("value")
     id = $(element).data("id")
 
-    #callback to updateTable on shown modal
+    # callback to updateTable on shown modal
     filters = JSON.parse($('#filters').html())
     filters.update_category = source
     filters.update_value = value
